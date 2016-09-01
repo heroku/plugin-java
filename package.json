@@ -1,0 +1,20 @@
+{
+  "name": "heroku-tunnels",
+  "version": "1.0.0",
+  "description": "Heroku Tunnels CLI",
+  "main": "index.js",
+  "author": "Joe Kutner",
+  "repository": "jkutner/heroku-tunnels",
+  "bugs": {
+    "url": "https://github.com/jkutner/heroku-tunnels/issues"
+  },
+  "keywords": [
+    "heroku-plugin"
+  ],
+  "license": "ISC",
+  "dependencies": {
+    "heroku-cli-util": "^6.0.15",
+    "socksv5": "0.0.6",
+    "ssh2": "0.4.11"
+  }
+}
