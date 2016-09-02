@@ -6,6 +6,8 @@ const co = require('co');
 const Client = require('ssh2').Client;
 const https = require('https')
 const url = require('url');
+const tty = require('tty')
+const stream = require('stream')
 const helpers = require('../lib/helpers')
 
 module.exports = {
@@ -21,45 +23,75 @@ module.exports = {
 
 function * run(context, heroku) {
   let configVars = yield heroku.get(`/apps/${context.app}/config-vars`)
+  var message = `Connecting to ${cli.color.cyan.bold('web.1')} on ${cli.color.app(context.app)}`
+  yield cli.action(message, {success: false}, co(function* () {
+    yield helpers.withTunnelInfo( context, heroku, configVars, {ssh: true}, response => {
+      cli.hush(response.body);
+      var json = JSON.parse(response.body);
+      var privateKey = helpers.massagePrivateKey(json['private_key'])
+      _ssh(json['tunnel_host'], json['tunnel_port'], json['dyno_user'], privateKey)
+    });
+  }))
+}
 
-  helpers.withTunnelInfo(
-    context,
-    heroku,
-    configVars,
-    {ssh: true}
-  ).then(response => {
-    cli.hush(response.body);
-    var json = JSON.parse(response.body);
-    var privateKey = helpers.massagePrivateKey(json['private_key'])
-    ssh(json['tunnel_host'], json['tunnel_port'], json['dyno_user'], privateKey)
-  }).catch(error => {
-    cli.error(error.response.body);
+function _ssh(tunnelHost, tunnelPort, dynoUser, privateKey) {
+  return new Promise((resolve, reject) => {
+    cli.action.status('connecting')
+    var conn = new Client();
+    conn.on('ready', function() {
+      cli.action.done('up')
+      conn.shell(function(err, stream) {
+        if (err) throw err;
+        stream.on('close', function() {
+          cli.hush('Stream :: close');
+          conn.end();
+          resolve();
+        })
+        .on('data', _readData(stream))
+        .on('error', reject)
+        process.once('SIGINT', () => conn.end())
+      });
+    }).connect({
+      host: tunnelHost,
+      port: tunnelPort,
+      username: dynoUser,
+      privateKey: privateKey
+    });
   });
 }
 
-function ssh(tunnelHost, tunnelPort, dynoUser, privateKey) {
-  var conn = new Client();
-  conn.on('ready', function() {
-    cli.hush('Client :: ready');
-    conn.shell(function(err, stream) {
-      if (err) throw err;
-      stream.on('close', function() {
-        cli.hush('Stream :: close');
-        conn.end();
-        cli.exit(0);
-      }).on('data', function(data) {
-        // console.log('STDOUT: ' + data);
-      }).stderr.on('data', function(data) {
-        cli.log('STDERR: ' + data);
-      });
+function _readData (c) {
+  let firstLine = true
+  return function(data) {
+    if (firstLine) {
+      firstLine = false
+      _readStdin(c)
+    }
+    process.stdout.write(data)
+  }
+}
 
-      stream.stdin.pipe(process.stdin);
-      process.stdout.pipe(stream.stdout);
-    });
-  }).connect({
-    host: tunnelHost,
-    port: tunnelPort,
-    username: dynoUser,
-    privateKey: privateKey
-  });
+function _readStdin (c) {
+  let stdin = process.stdin
+  stdin.setEncoding('utf8')
+  if (stdin.unref) stdin.unref()
+  if (tty.isatty(0)) {
+    stdin.setRawMode(true)
+    stdin.pipe(c)
+    let sigints = []
+    stdin.on('data', function (c) {
+      if (c === '\u0003') sigints.push(new Date())
+      sigints = sigints.filter(d => d > new Date() - 1000)
+      if (sigints.length >= 4) {
+        cli.error('forcing dyno disconnect')
+        process.exit(1)
+      }
+    })
+  } else {
+    stdin.pipe(new stream.Transform({
+      objectMode: true,
+      transform: (chunk, _, next) => c.write(chunk, next),
+      flush: done => c.write('\x04', done)
+    }))
+  }
 }

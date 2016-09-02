@@ -23,15 +23,9 @@ module.exports = {
 function * run(context, heroku) {
   let configVars = yield heroku.get(`/apps/${context.app}/config-vars`)
 
-  helpers.withTunnelInfo(
-    context,
-    heroku,
-    configVars,
-    {ssh: true}
-  ).then(response => {
+  helpers.withTunnelInfo(context, heroku, configVars, {ssh: true}, response => {
     cli.hush(response.body);
     var json = JSON.parse(response.body);
-
     var user = json['dyno_user']
     var dyno_ip = json['dyno_ip']
     var host = json['tunnel_host']
@@ -49,7 +43,5 @@ function * run(context, heroku) {
       cli.log("Launching JConsole...")
       child.exec(`jconsole -J-DsocksProxyHost=localhost -J-DsocksProxyPort=1080 ${dyno_ip}:1098`)
     });
-  }).catch(error => {
-    cli.error(error.response.body);
-  });
+  })
 }

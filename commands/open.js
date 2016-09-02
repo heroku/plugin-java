@@ -21,12 +21,10 @@ module.exports = {
 
 function * run(context, heroku) {
   let configVars = yield heroku.get(`/apps/${context.app}/config-vars`)
-  helpers.withTunnelInfo(context, heroku, configVars, {}).then(response => {
+  helpers.withTunnelInfo(context, heroku, configVars, {}, response => {
     cli.hush(response.body);
     var json = JSON.parse(response.body);
     var path=`https://${json['tunnel_host']}:${json['tunnel_port']}`
     cli.open(url.resolve(path, context.args.path || ''))
-  }).catch(error => {
-    cli.error(error.response.body);
-  });
+  })
 }
