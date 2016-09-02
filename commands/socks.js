@@ -22,30 +22,5 @@ module.exports = {
 
 function * run(context, heroku) {
   let configVars = yield heroku.get(`/apps/${context.app}/config-vars`)
-
-  helpers.withTunnelInfo(
-    context,
-    heroku,
-    configVars,
-    {ssh: true}
-  ).then(response => {
-    cli.hush(response.body);
-    var json = JSON.parse(response.body);
-
-    var user = json['dyno_user']
-    var host = json['tunnel_host']
-    var port = json['tunnel_port']
-    var key = helpers.massagePrivateKey(json['private_key'])
-
-    cli.hush('server: ' + user + '@' + host + ':' + port)
-
-    helpers.socksv5({
-      host: host,
-      port: port,
-      username: user,
-      privateKey: key
-    });
-  }).catch(error => {
-    cli.error(error.response.body);
-  });
+  helpers.createSocksProxy(context, heroku, configVars)
 }
