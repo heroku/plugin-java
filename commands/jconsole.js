@@ -23,25 +23,9 @@ module.exports = {
 function * run(context, heroku) {
   let configVars = yield heroku.get(`/apps/${context.app}/config-vars`)
 
-  helpers.withTunnelInfo(context, heroku, configVars, {ssh: true}, response => {
-    cli.hush(response.body);
-    var json = JSON.parse(response.body);
-    var user = json['dyno_user']
-    var dyno_ip = json['dyno_ip']
-    var host = json['tunnel_host']
-    var port = json['tunnel_port']
-    var key = helpers.massagePrivateKey(json['private_key'])
-
-    cli.hush('server: ' + user + '@' + host + ':' + port)
-
-    helpers.socksv5({
-      host: host,
-      port: port,
-      username: user,
-      privateKey: key
-    }, function() {
-      cli.log("Launching JConsole...")
-      child.exec(`jconsole -J-DsocksProxyHost=localhost -J-DsocksProxyPort=1080 ${dyno_ip}:1098`)
-    });
+  yield helpers.createSocksProxy(context, heroku, configVars, function(dyno_ip) {
+    cli.log("Launching JConsole...")
+    child.exec(`jconsole -J-DsocksProxyHost=localhost -J-DsocksProxyPort=1080 ${dyno_ip}:1098`)
+    // TODO terminate socks proxy if java process ends?
   })
 }

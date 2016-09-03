@@ -25,18 +25,17 @@ function * run(context, heroku) {
   let configVars = yield heroku.get(`/apps/${context.app}/config-vars`)
 
   yield helpers.updateClientKey(context, heroku, configVars, function(privateKey, response) {
-    // var message = `Connecting to ${cli.color.cyan.bold('web.1')} on ${cli.color.app(context.app)}`
-    // cli.action(message, {success: false}, co(function* () {
+    var message = `Connecting to ${cli.color.cyan.bold('web.1')} on ${cli.color.app(context.app)}`
+    cli.action(message, {success: false}, co(function* () {
       cli.hush(response.body);
       var json = JSON.parse(response.body);
       _ssh(json['tunnel_host'], json['tunnel_port'], json['dyno_user'], privateKey)
-    // }))
+    }))
   })
 }
 
 function _ssh(tunnelHost, tunnelPort, dynoUser, privateKey) {
   return new Promise((resolve, reject) => {
-    cli.action.status('connecting')
     var conn = new Client();
     conn.on('ready', function() {
       cli.action.done('up')

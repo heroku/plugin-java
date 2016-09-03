@@ -22,5 +22,5 @@ module.exports = {
 
 function * run(context, heroku) {
   let configVars = yield heroku.get(`/apps/${context.app}/config-vars`)
-  helpers.createSocksProxy(context, heroku, configVars)
+  yield helpers.createSocksProxy(context, heroku, configVars)
 }
