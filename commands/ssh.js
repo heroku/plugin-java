@@ -24,17 +24,13 @@ module.exports = {
 function * run(context, heroku) {
   let configVars = yield heroku.get(`/apps/${context.app}/config-vars`)
 
-  yield helpers.updateClientKey(context, heroku, configVars, response => {
-
-    var message = `Connecting to ${cli.color.cyan.bold('web.1')} on ${cli.color.app(context.app)}`
-    cli.action(message, {success: false}, co(function* () {
-      yield helpers.withTunnelInfo(context, heroku, configVars, response => {
-        cli.hush(response.body);
-        var json = JSON.parse(response.body);
-        var privateKey = helpers.massagePrivateKey(json['private_key'])
-        _ssh(json['tunnel_host'], json['tunnel_port'], json['dyno_user'], privateKey)
-      });
-    }))
+  yield helpers.updateClientKey(context, heroku, configVars, function(privateKey, response) {
+    // var message = `Connecting to ${cli.color.cyan.bold('web.1')} on ${cli.color.app(context.app)}`
+    // cli.action(message, {success: false}, co(function* () {
+      cli.hush(response.body);
+      var json = JSON.parse(response.body);
+      _ssh(json['tunnel_host'], json['tunnel_port'], json['dyno_user'], privateKey)
+    // }))
   })
 }
 
@@ -47,7 +43,6 @@ function _ssh(tunnelHost, tunnelPort, dynoUser, privateKey) {
       conn.shell(function(err, stream) {
         if (err) throw err;
         stream.on('close', function() {
-          cli.hush('Stream :: close');
           conn.end();
           resolve();
         })
