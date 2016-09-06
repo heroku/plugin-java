@@ -15,7 +15,8 @@ module.exports = {
   command: 'ssh',
   description: 'Create an SSH session through the tunnel',
   help: 'Usage: heroku tunnels:ssh',
-  args: [{name: 'dyno', optional: true}],
+  args: [{name: 'command', optional: true}],
+  flags: [{ name: 'dyno', char: 'd', hasValue: true }],
   needsApp: true,
   needsAuth: true,
   run: cli.command(co.wrap(run))
@@ -29,26 +30,39 @@ function * run(context, heroku) {
     cli.action(message, {success: false}, co(function* () {
       cli.hush(response.body);
       var json = JSON.parse(response.body);
-      _ssh(json['tunnel_host'], json['tunnel_port'], json['dyno_user'], privateKey)
+      _ssh(context, json['tunnel_host'], json['tunnel_port'], json['dyno_user'], privateKey)
     }))
   })
 }
 
-function _ssh(tunnelHost, tunnelPort, dynoUser, privateKey) {
+function _ssh(context, tunnelHost, tunnelPort, dynoUser, privateKey) {
   return new Promise((resolve, reject) => {
     var conn = new Client();
     conn.on('ready', function() {
       cli.action.done('up')
-      conn.shell(function(err, stream) {
-        if (err) throw err;
-        stream.on('close', function() {
-          conn.end();
-          resolve();
-        })
-        .on('data', _readData(stream))
-        .on('error', reject)
-        process.once('SIGINT', () => conn.end())
-      });
+      if (context.args.command) {
+        conn.exec(context.args.command, function(err, stream) {
+          if (err) throw err;
+          stream.on('close', function(code, signal) {
+            conn.end();
+            resolve();
+          }).on('data', function(data) {
+            cli.log(data.toString());
+          }).on('data', reject);
+        });
+      } else {
+        conn.shell(function(err, stream) {
+          if (err) throw err;
+          stream.on('close', function() {
+            conn.end();
+            resolve();
+          })
+          .on('data', _readData(stream))
+          .on('error', reject)
+          process.once('SIGINT', () => conn.end())
+        });
+
+      }
     }).connect({
       host: tunnelHost,
       port: tunnelPort,
