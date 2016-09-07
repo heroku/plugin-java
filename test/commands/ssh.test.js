@@ -80,7 +80,6 @@ describe('ssh', function() {
 
           console.log(`Running tunnels:ssh on ${this.app.name} ${this.dyno.name}...`);
           return ssh.run(config)
-            .then(() => console.log('wtf'))
             .then(() => expect(cli.stderr, 'to contain', 'Establishing credentials...'))
             .then(() => expect(cli.stderr, 'to contain', `Connecting to ${this.dyno.name} on ${this.app.name}...`))
             .then(() => expect(cli.stdout, 'to contain', '/app'))

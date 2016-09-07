@@ -38,16 +38,12 @@ function * run(context, heroku) {
 
 function _ssh(context, tunnelHost, tunnelPort, dynoUser, privateKey) {
   return new Promise((resolve, reject) => {
-    console.log("made000")
     var conn = new Client();
     conn.on('ready', function() {
-      console.log("made123")
       cli.action.done('up')
       if (context.args.length > 0) {
-        console.log("made456")
         let cmd = command.buildCommand(context.args)
         conn.exec(cmd, function(err, stream) {
-          console.log("made789")
           if (err) throw err;
           stream.on('close', function(code, signal) {
             conn.end();
@@ -67,7 +63,6 @@ function _ssh(context, tunnelHost, tunnelPort, dynoUser, privateKey) {
           .on('error', reject)
           process.once('SIGINT', () => conn.end())
         });
-
       }
     }).connect({
       host: tunnelHost,
