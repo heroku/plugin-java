@@ -9,13 +9,14 @@ const url = require('url');
 const tty = require('tty')
 const stream = require('stream')
 const helpers = require('../lib/helpers')
+const command = require('../lib/command')
 
 module.exports = {
   topic: 'tunnels',
   command: 'ssh',
   description: 'Create an SSH session through the tunnel',
   help: 'Usage: heroku tunnels:ssh',
-  args: [{name: 'command', optional: true}],
+  variableArgs: true,
   flags: [{ name: 'dyno', char: 'd', hasValue: true }],
   needsApp: true,
   needsAuth: true,
@@ -25,8 +26,8 @@ module.exports = {
 function * run(context, heroku) {
   let configVars = yield heroku.get(`/apps/${context.app}/config-vars`)
 
-  yield helpers.updateClientKey(context, heroku, configVars, function(privateKey, response) {
-    var message = `Connecting to ${cli.color.cyan.bold('web.1')} on ${cli.color.app(context.app)}`
+  yield helpers.updateClientKey(context, heroku, configVars, function(privateKey, dyno, response) {
+    var message = `Connecting to ${cli.color.cyan.bold(dyno)} on ${cli.color.app(context.app)}`
     cli.action(message, {success: false}, co(function* () {
       cli.hush(response.body);
       var json = JSON.parse(response.body);
@@ -37,11 +38,16 @@ function * run(context, heroku) {
 
 function _ssh(context, tunnelHost, tunnelPort, dynoUser, privateKey) {
   return new Promise((resolve, reject) => {
+    console.log("made000")
     var conn = new Client();
     conn.on('ready', function() {
+      console.log("made123")
       cli.action.done('up')
-      if (context.args.command) {
-        conn.exec(context.args.command, function(err, stream) {
+      if (context.args.length > 0) {
+        console.log("made456")
+        let cmd = command.buildCommand(context.args)
+        conn.exec(cmd, function(err, stream) {
+          console.log("made789")
           if (err) throw err;
           stream.on('close', function(code, signal) {
             conn.end();
