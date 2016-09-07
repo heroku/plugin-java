@@ -64,7 +64,7 @@ function _ssh(context, tunnelHost, tunnelPort, dynoUser, privateKey) {
           process.once('SIGINT', () => conn.end())
         });
       }
-    }).connect({
+    }).on('error', reject).connect({
       host: tunnelHost,
       port: tunnelPort,
       username: dynoUser,
