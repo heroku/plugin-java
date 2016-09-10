@@ -4,7 +4,18 @@ assert_equal() {
   local a=${1}
   local b=${2}
   if [ "$a" != "$b" ]; then
-    echo "FAILED: expected ${a}, found ${b}"
+    echo "\nFAILED: expected ${a}, found ${b}"
+    exit 1
+  fi
+}
+
+assert_contains() {
+  local a=${1}
+  local b=${2}
+  if echo "$b" | grep -qi "$a"; then
+    :
+  else
+    echo "\nFAILED: expected ${a} to match ${b}"
     exit 1
   fi
 }
@@ -26,11 +37,17 @@ heroku create ${app}
 git add Procfile
 git commit -m "first"
 
+trap "{ echo ''; echo 'Cleaning up...'; heroku destroy ${app} --confirm ${app}; popd > /dev/null 2>&1; rm -rf /tmp/${app}; }" EXIT
+
 echo "Creating addon..."
 heroku addons:create tunnels
 
 echo "Setting buildpack..."
 heroku buildpacks:set https://github.com/jkutner/heroku-buildpack-tunnels
+
+cmdStderr="$(heroku tunnels:ssh "pwd" 2>&1 >/dev/null)"
+assert_contains "Establishing credentials" "$cmdStderr"
+assert_contains "Could not connect to dyno!" "$cmdStderr"
 
 echo "Deploying..."
 git push heroku master
@@ -45,11 +62,6 @@ while [ "up" != "$state" ]; do
 done
 
 assert_equal "/app" "$(heroku tunnels:ssh "pwd")"
-
-popd > /dev/null 2>&1
-echo "Cleaning up..."
-heroku destroy ${app} --confirm ${app}
-rm -rf /tmp/${app}
 
 echo ""
 echo "SUCCESS: All tests passed!"
