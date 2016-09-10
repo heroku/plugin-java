@@ -45,9 +45,11 @@ heroku addons:create tunnels
 echo "Setting buildpack..."
 heroku buildpacks:set https://github.com/jkutner/heroku-buildpack-tunnels
 
-cmdStderr="$(heroku tunnels:ssh "pwd" 2>&1 >/dev/null)"
-assert_contains "Establishing credentials" "$cmdStderr"
-assert_contains "Could not connect to dyno!" "$cmdStderr"
+assert_contains "No tunnels running!" "$(heroku tunnels:status 2>&1 >/dev/null)"
+
+output="$(heroku tunnels:ssh "pwd" 2>&1 >/dev/null)"
+assert_contains "Establishing credentials" "$output"
+assert_contains "Could not connect to dyno!" "$output"
 
 echo "Deploying..."
 git push heroku master
@@ -62,6 +64,11 @@ while [ "up" != "$state" ]; do
 done
 
 assert_equal "/app" "$(heroku tunnels:ssh "pwd")"
+
+output="$(heroku tunnels:status)"
+assert_contains "web.1" "$output"
+assert_contains "running" "$output"
+assert_contains "up" "$output"
 
 echo ""
 echo "SUCCESS: All tests passed!"
