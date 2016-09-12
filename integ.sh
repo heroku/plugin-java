@@ -70,5 +70,23 @@ assert_contains "web.1" "$output"
 assert_contains "running" "$output"
 assert_contains "up" "$output"
 
+heroku ps:scale web=0
+heroku run:detached "curl -sSL \$TUNNELS_URL | bash -s \$DYNO; echo 'class A{public static void main(String[] a) throws Exception{while(true){Thread.sleep(1000);}}}' > A.java; javac A.java; java A"
+dyno="$(heroku ps --json | jq .[0].name -r)"
+
+# status="null"
+# while [ "$status" != "up" ]; do
+#   status="$(heroku ps --json | jq .[0].status -r)"
+# end
+
+sleep 5
+
+heroku logs -d $dyno
+
+assert_contains "run." "$dyno"
+dump="$(heroku tunnels:jstack --dyno $dyno)"
+
+assert_contains "GC task thread" "$dump"
+
 echo ""
 echo "SUCCESS: All tests passed!"

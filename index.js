@@ -9,5 +9,6 @@ exports.commands = [
   require('./commands/ssh.js'),
   require('./commands/open.js'),
   require('./commands/socks.js'),
-  require('./commands/status.js')
+  require('./commands/status.js'),
+  require('./commands/jstack.js')
 ];
