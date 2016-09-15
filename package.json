@@ -23,18 +23,5 @@
     "socksv5": "0.0.6",
     "ssh2": "0.4.11",
     "ursa": "^0.9.4"
-  },
-  "devDependencies": {
-    "fixture-stdout": "0.2.1",
-    "chai": "^3.2.0",
-    "depcheck": "^0.4.7",
-    "dir-compare": "^0.0.2",
-    "fs-extra": "^0.23.1",
-    "heroku-client": "^3.0.0-beta2",
-    "mocha": "^2.2.4",
-    "wrench": "^1.5.8",
-    "unexpected": "10.13.2",
-    "tmp": "0.0.28",
-    "sleep" : "3.0.1"
   }
 }
