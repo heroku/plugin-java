@@ -1,6 +1,6 @@
 {
   "name": "heroku-tunnels",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Heroku Tunnels CLI",
   "main": "index.js",
   "author": "Joe Kutner",
