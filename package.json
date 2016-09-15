@@ -4,9 +4,9 @@
   "description": "Heroku Tunnels CLI",
   "main": "index.js",
   "author": "Joe Kutner",
-  "repository": "jkutner/heroku-tunnels",
+  "repository": "tunnels-addon/cli",
   "bugs": {
-    "url": "https://github.com/jkutner/heroku-tunnels/issues"
+    "url": "https://github.com/tunnels-addon/cli/issues"
   },
   "scripts": {
     "test": "mocha",
