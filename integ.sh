@@ -43,7 +43,7 @@ echo "Creating addon..."
 heroku addons:create tunnels
 
 echo "Setting buildpack..."
-heroku buildpacks:set https://github.com/jkutner/heroku-buildpack-tunnels
+heroku buildpacks:set https://github.com/tunnels-addon/buildpack
 
 assert_contains "No tunnels running!" "$(heroku tunnels:status 2>&1 >/dev/null)"
 
