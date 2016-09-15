@@ -10,5 +10,6 @@ exports.commands = [
   require('./commands/open.js'),
   require('./commands/socks.js'),
   require('./commands/status.js'),
-  require('./commands/jstack.js')
+  require('./commands/jstack.js'),
+  require('./commands/jmap.js')
 ];

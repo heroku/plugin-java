@@ -88,5 +88,11 @@ dump="$(heroku tunnels:jstack --dyno $dyno)"
 
 assert_contains "GC task thread" "$dump"
 
+dump="$(heroku tunnels:jmap --dyno $dyno)"
+
+assert_contains "#instances" "$dump"
+assert_contains "java.lang.String" "$dump"
+assert_contains "Total" "$dump"
+
 echo ""
 echo "SUCCESS: All tests passed!"
