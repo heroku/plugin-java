@@ -11,5 +11,6 @@ exports.commands = [
   require('./commands/socks.js'),
   require('./commands/status.js'),
   require('./commands/jstack.js'),
-  require('./commands/jmap.js')
+  require('./commands/jmap.js'),
+  require('./commands/port.js')
 ];
