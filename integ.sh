@@ -39,6 +39,8 @@ git commit -m "first"
 
 trap "{ echo ''; echo 'Cleaning up...'; heroku destroy ${app} --confirm ${app}; popd > /dev/null 2>&1; rm -rf /tmp/${app}; }" EXIT
 
+assert_contains "No Tunnels add-on found!" "$(heroku tunnels:ssh 2>&1)"
+
 echo "Creating addon..."
 heroku addons:create tunnels
 
