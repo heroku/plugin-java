@@ -40,6 +40,7 @@ function * run(context, heroku) {
   let dynos = yield heroku.request({path: `/apps/${context.app}/dynos`})
 
   var rawTunnelsUrl = configVars['TUNNELS_URL']
+  var configDyno = configVars['TUNNELS_DYNO']
   var tunnelsUrl = url.parse(rawTunnelsUrl)
   var tunnelsPath = `/api/v1`
 
@@ -59,7 +60,7 @@ function * run(context, heroku) {
     } else {
 
       for (var i in reservations) {
-        var name = reservations[i]['dyno_name']
+        var name = configDyno || reservations[i]['dyno_name']
         var dyno = dynos.find(d => d.name === name)
 
         cli.table([

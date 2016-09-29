@@ -47,9 +47,9 @@ heroku addons:create tunnels
 echo "Setting buildpack..."
 heroku buildpacks:set https://github.com/tunnels-addon/buildpack
 
-assert_contains "No tunnels running!" "$(heroku tunnels:status 2>&1 >/dev/null)"
+assert_contains "No tunnels running!" "$(heroku tunnels:status 2>&1)"
 
-output="$(heroku tunnels:ssh "pwd" 2>&1 >/dev/null)"
+output="$(heroku tunnels:ssh "pwd" 2>&1)"
 assert_contains "Establishing credentials" "$output"
 assert_contains "Could not connect to dyno!" "$output"
 
