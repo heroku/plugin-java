@@ -33,7 +33,7 @@ function * run(context, heroku) {
       var json = JSON.parse(response.body);
 
       context.args = [`jps | grep -v "Jps" | tail -n1 | grep -o '^\\S*' | xargs jmap -histo`]
-      ssh.connect(context, json['tunnel_host'], json['tunnel_port'], json['dyno_user'], privateKey)
+      ssh.connect(context, json['tunnel_host'], json['client_user'], privateKey)
     }))
   })
 }

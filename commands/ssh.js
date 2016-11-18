@@ -32,7 +32,7 @@ function * run(context, heroku) {
     cli.action(message, {success: false}, co(function* () {
       cli.hush(response.body);
       var json = JSON.parse(response.body);
-      ssh.connect(context, json['tunnel_host'], 80, json['client_user'], privateKey)
+      ssh.connect(context, json['tunnel_host'], json['client_user'], privateKey)
     }))
   })
 }

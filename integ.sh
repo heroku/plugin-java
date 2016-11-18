@@ -94,7 +94,7 @@ dump="$(heroku tunnels:jmap --dyno $dyno)"
 
 assert_contains "#instances" "$dump"
 assert_contains "java.lang.String" "$dump"
-assert_contains "Total" "$dump"
+# assert_contains "Total" "$dump"
 
 echo ""
 echo "SUCCESS: All tests passed!"
