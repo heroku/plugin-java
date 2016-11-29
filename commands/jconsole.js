@@ -25,7 +25,7 @@ function * run(context, heroku) {
 
   yield helpers.createSocksProxy(context, heroku, configVars, function(dyno_ip) {
     cli.log("Launching JConsole...")
-    child.exec(`jconsole -J-DsocksProxyHost=localhost -J-DsocksProxyPort=1080 ${dyno_ip}:1098`)
+    child.execFile('jconsole', ['-J-DsocksProxyHost=localhost', '-J-DsocksProxyPort=1080', `${dyno_ip}:1098`])
     // TODO terminate socks proxy if java process ends?
   })
 }

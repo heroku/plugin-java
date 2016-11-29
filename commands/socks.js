@@ -15,6 +15,7 @@ module.exports = {
   description: 'Launch a SOCKS proxy into a dyno',
   help: 'Usage: heroku tunnels:socks',
   args: [],
+  flags: [{ name: 'dyno', char: 'd', hasValue: true }],
   needsApp: true,
   needsAuth: true,
   run: cli.command(co.wrap(run))
