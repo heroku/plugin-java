@@ -5,7 +5,7 @@ const path = require('path');
 const cli = require('heroku-cli-util');
 const https = require('https')
 const http = require('http')
-const fs = require('fs')
+const fs = require('fs');
 const co = require('co');
 const url = require('url');
 const helpers = require('../lib/helpers')
@@ -23,19 +23,6 @@ module.exports = {
 
 function * run(context, heroku) {
   let configVars = yield heroku.get(`/apps/${context.app}/config-vars`)
-
-
-    // let promises = {
-    //   dynos: heroku.request({path: `/apps/${context.app}/dynos`})
-    // }
-
-    // if (!json && !extended) {
-    //   promises.app_info = heroku.request({
-    //     path: `/apps/${context.app}`,
-    //     headers: {Accept: 'application/vnd.heroku+json; version=3.process-tier'}
-    //   })
-    //   promises.account_info = heroku.request({path: '/account'})
-    // }
 
   let dynos = yield heroku.request({path: `/apps/${context.app}/dynos`})
 
