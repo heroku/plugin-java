@@ -92,7 +92,7 @@ heroku logs -d $dyno
 assert_contains "run." "$dyno"
 dump="$(heroku tunnels:jstack --dyno $dyno)"
 
-assert_contains "GC task thread" "$dump"
+assert_contains "Full thread dump OpenJDK" "$dump"
 
 dump="$(heroku tunnels:jmap --dyno $dyno)"
 
