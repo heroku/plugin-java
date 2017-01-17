@@ -13,7 +13,7 @@ const helpers = require('../lib/helpers')
 module.exports = {
   topic: 'tunnels',
   command: 'status',
-  description: 'Check the status of your tunnels.',
+  description: 'Check the status of your tunnels',
   help: 'Usage: heroku tunnels:status',
   args: [],
   needsApp: true,
