@@ -4,7 +4,4 @@ node_js:
 - '6.4.0'
 before_install:
 - sh etc/travis-setup.sh
-env:
-  global:
-  - secure: AZK28m67moXYhzZhVV4/FrODY0F3t6R9iEY5hR2m8Vqqt10Pu2L374UcIKiPXpxoExhX+/wU5HEi4vUXy/AFSCRLfpdMlHVh7oS5rvJVE/m2fHAhiFFjx3oiJO1xP5ne9Bq/sf1w3kAxHhcZ+LGAcVX8Jd+74MLdsN/Jb44tWrNh3puyDVaRQtf5MX7NjnPssxNb/8xArCmkklB1oi/JId3xElfU8F3iXuBCwi6HzsfPlTQPEFHtcQTH75BeFSULiuzgxicofJN5Us3tLd+9itC+ZmOL6K3gYUpowMuDZqPyeraoO5g0orNxoiQdN+B08DgjLJN3sbObK3c0vFyqNMCWWlJpZ8FD/MecueN7F3GOSt3Tk/Z9NAM7m0sT0dAPpJRq+tKUndmfLCMw6CxO87xpHvBPEXzFIGKeq6xnz3PVs2OtNXeVlz9e5sKTdSSrgy01jNmnaxNkInDEntS71cPgPSQyL6O0OnSze7WIdwuGsV1Q6xHEI2/KHxQidRXbHuqkUy8sfPo+2x8DEF+sjl3l+jNvzdC/LOfG7h+vAovunfj8Vp8U38VxRRzwVH0g1Jetbu3pIIPa9wyzZ0kn78f7GS9A/urZPjR9p8yTsOJESURqNGVh6E59mJlMT+Y01y5JEOMSciDizWTyHD9svclTVxvzN9sy6U6D9t684CE=
 script: "sh integ.sh"
