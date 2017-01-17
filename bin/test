@@ -24,7 +24,7 @@ set -e
 
 heroku plugins:link .
 
-app="tunnels-test-$RANDOM"
+app="tunnels-test-${RANDOM:-$TRAVIS_BUILD_ID}"
 echo "Preparing test app ${app}..."
 
 mkdir -p tmp
