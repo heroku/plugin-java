@@ -1,8 +1,8 @@
 #!/bin/bash
 
 assert_equal() {
-  local expected=${1}
-  local actual=${2}
+  local expected="${1}"
+  local actual="${2}"
   if [ "$expected" != "$actual" ]; then
     echo "\nFAILED: expected ${expected}, found ${actual}"
     exit 1
@@ -10,8 +10,8 @@ assert_equal() {
 }
 
 assert_contains() {
-  local expected=${1}
-  local actual=${2}
+  local expected="${1}"
+  local actual="${2}"
   if echo "$actual" | grep -qi "$expected"; then
     :
   else
