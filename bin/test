@@ -25,17 +25,22 @@ set -e
 heroku plugins:link .
 
 app="tunnels-test-$RANDOM"
-echo "Creating test app ${app}..."
-pushd . > /dev/null 2>&1
+echo "Preparing test app ${app}..."
+# pushd . > /dev/null 2>&1
 rm -rf tmp
 mkdir -p tmp
 cd tmp
 mkdir ${app}
 cd ${app}
+
+echo "Creating git repo..."
 git init
 web="ruby -rwebrick -e\"s=WEBrick::HTTPServer.new(:BindAddress => '0.0.0.0', :Port => \$PORT, :DocumentRoot => Dir.pwd); s.mount_proc('/'){|q,r| r.body='Hello'}; s.start\""
 echo "web: ${web}" > Procfile
+
+echo "Creating Heroku app..."
 heroku create ${app}
+heroku buildpacks:set https://github.com/ryandotsmith/null-buildpack
 git add Procfile
 git commit -m "first"
 
@@ -43,11 +48,8 @@ trap "{ echo ''; echo 'Cleaning up...'; heroku destroy ${app} --confirm ${app}; 
 
 assert_contains "No Tunnels add-on found!" "$(heroku tunnels:ssh 2>&1)"
 
-echo "Creating addon..."
-heroku addons:create tunnels
-
-echo "Setting buildpack..."
-heroku buildpacks:set https://github.com/tunnels-addon/buildpack
+echo "Initializing Tunnels..."
+heroku tunnels:init
 
 assert_contains "No tunnels running!" "$(heroku tunnels:status 2>&1)"
 

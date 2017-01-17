@@ -4,4 +4,5 @@ node_js:
 - '6.4.0'
 before_install:
 - sh etc/travis-setup.sh
+- sudo apt-get install git
 script: "sh bin/test"
