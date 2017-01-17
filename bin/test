@@ -1,21 +1,21 @@
 #!/bin/bash
 
 assert_equal() {
-  local a=${1}
-  local b=${2}
-  if [ "$a" != "$b" ]; then
-    echo "\nFAILED: expected ${a}, found ${b}"
+  local expected=${1}
+  local actual=${2}
+  if [ "$expected" != "$actual" ]; then
+    echo "\nFAILED: expected ${expected}, found ${actual}"
     exit 1
   fi
 }
 
 assert_contains() {
-  local a=${1}
-  local b=${2}
-  if echo "$b" | grep -qi "$a"; then
+  local expected=${1}
+  local actual=${2}
+  if echo "$actual" | grep -qi "$expected"; then
     :
   else
-    echo "\nFAILED: expected ${a} to match ${b}"
+    echo "\nFAILED: expected ${expected} to match ${actual}"
     exit 1
   fi
 }
