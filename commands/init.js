@@ -40,9 +40,9 @@ function * run(context, heroku) {
       cli.log(`Adding the Tunnels buildpack to ${context.app}`)
       child.execSync(`heroku buildpacks:add -i 1 ${buildpackUrl} -a ${context.app}`)
     }
-    cli.log('')
-    cli.log('Run the following commands to redeploy your app, then Tunnels will be ready to use:')
-    cli.log('  $ git commit -m "Added Tunnels" --allow-empty')
-    cli.log('  $ git push heroku master')
+    cli.log('');
+    cli.log('Run the following commands to redeploy your app, then Tunnels will be ready to use:');
+    cli.log(cli.color.white.bold('  git commit -m "Added Tunnels" --allow-empty'));
+    cli.log(cli.color.white.bold('  git push heroku master'));
   }
 }
