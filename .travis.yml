@@ -4,4 +4,4 @@ node_js:
 - '6.4.0'
 before_install:
 - sh etc/travis-setup.sh
-script: "sh integ.sh"
+script: "sh bin/test"
