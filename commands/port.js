@@ -30,7 +30,7 @@ function * run(context, heroku) {
   let localPort = context.flags.localPort || remotePort;
   let configVars = yield heroku.get(`/apps/${context.app}/config-vars`)
   yield helpers.createSocksProxy(context, heroku, configVars, function(dynoIp, dynoName, socksPort) {
-    cli.log(`Listening on ${localPort} and forwarding to ${dynoName}:${remotePort}...`)
+    cli.log(`Listening on ${cli.color.white.bold(localPort)} and forwarding to ${cli.color.white.bold(`${dynoName}:${remotePort}`)}`)
     net.createServer(function(connIn) {
       socks.connect({
         host: '0.0.0.0',
