@@ -2,8 +2,8 @@
 
 [ "$TRAVIS" != "true" ] && echo "Not running on Travis!" && exit 1
 
-git config --global user.email ${HEROKU_API_USER:-"tunnels@example.com"}
-git config --global user.name 'TunnelsTester'
+git config --global user.email ${HEROKU_API_USER:-"heroku-exec@example.com"}
+git config --global user.name 'HerokuExecTester'
 
 cat <<EOF >> ~/.ssh/config
 Host heroku.com
@@ -16,7 +16,7 @@ EOF
 
 cat <<EOF >> ~/.netrc
 machine git.heroku.com
-  login ${HEROKU_API_USER:-"tunnels@example.com"}
+  login ${HEROKU_API_USER:-"heroku-exec@example.com"}
   password ${HEROKU_API_KEY:-"password"}
 EOF
 

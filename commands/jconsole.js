@@ -9,15 +9,17 @@ const fs = require('fs')
 const co = require('co');
 const helpers = require('../lib/helpers')
 
-module.exports = {
-  topic: 'tunnels',
-  command: 'jconsole',
-  description: 'Launch JConsole into an app',
-  help: 'Usage: heroku tunnels:jconsole',
-  args: [],
-  needsApp: true,
-  needsAuth: true,
-  run: cli.command(co.wrap(run))
+module.exports = function(topic, command) {
+  return {
+    topic: topic,
+    command: command,
+    description: 'Launch JConsole into an app',
+    help: `Usage: heroku ${topic}:${command}`,
+    args: [],
+    needsApp: true,
+    needsAuth: true,
+    run: cli.command(co.wrap(run))
+  }
 };
 
 function * run(context, heroku) {

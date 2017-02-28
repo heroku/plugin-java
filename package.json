@@ -1,12 +1,12 @@
 {
-  "name": "heroku-tunnels",
-  "version": "0.3.0",
-  "description": "Heroku Tunnels CLI",
+  "name": "heroku-cli-exec",
+  "version": "0.1.0",
+  "description": "Heroku-Exec CLI",
   "main": "index.js",
   "author": "Joe Kutner",
-  "repository": "tunnels-addon/cli",
+  "repository": "heroku/heroku-cli-exec",
   "bugs": {
-    "url": "https://github.com/tunnels-addon/cli/issues"
+    "url": "https://github.com/heroku/heroku-cli-exec/issues"
   },
   "scripts": {
     "test": "mocha",

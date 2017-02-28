@@ -13,18 +13,20 @@ const stream = require('stream');
 const helpers = require('../lib/helpers')
 const ssh = require('../lib/ssh')
 
-module.exports = {
-  topic: 'tunnels',
-  command: 'copy',
-  description: 'Copy a file from a dyno to the local filesystem.',
-  help: 'Usage: heroku tunnels:copy FILENAME',
-  args: [ {name: 'file'} ],
-  flags: [
-    { name: 'dyno', char: 'd', hasValue: true },
-    { name: 'output', char: 'o', hasValue: true }],
-  needsApp: true,
-  needsAuth: true,
-  run: cli.command(co.wrap(run))
+module.exports = function(topic, command) {
+  return {
+    topic: topic,
+    command: command,
+    description: 'Copy a file from a dyno to the local filesystem.',
+    help: `Usage: heroku ${topic}:${command} FILENAME`,
+    args: [ {name: 'file'} ],
+    flags: [
+      { name: 'dyno', char: 'd', hasValue: true },
+      { name: 'output', char: 'o', hasValue: true }],
+    needsApp: true,
+    needsAuth: true,
+    run: cli.command(co.wrap(run))
+  }
 };
 
 function * run(context, heroku) {

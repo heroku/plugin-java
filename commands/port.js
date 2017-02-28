@@ -11,18 +11,20 @@ const socks = require('socksv5')
 var net = require("net");
 const helpers = require('../lib/helpers')
 
-module.exports = {
-  topic: 'tunnels',
-  command: 'port',
-  description: 'Forward traffic on a local port to a dyno',
-  help: 'Usage: heroku tunnels:port PORT',
-  args: [{name: 'port', optional: false}],
-  flags: [
-    { name: 'dyno', char: 'd', hasValue: true },
-    { name: 'localPort', char: 'p', hasValue: true } ],
-  needsApp: true,
-  needsAuth: true,
-  run: cli.command(co.wrap(run))
+module.exports = function(topic, command) {
+  return {
+    topic: topic,
+    command: command,
+    description: 'Forward traffic on a local port to a dyno',
+    help: `Usage: heroku ${topic}:${command} PORT`,
+    args: [{name: 'port', optional: false}],
+    flags: [
+      { name: 'dyno', char: 'd', hasValue: true },
+      { name: 'localPort', char: 'p', hasValue: true } ],
+    needsApp: true,
+    needsAuth: true,
+    run: cli.command(co.wrap(run))
+  }
 };
 
 function * run(context, heroku) {

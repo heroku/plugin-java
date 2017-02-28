@@ -9,16 +9,18 @@ const fs = require('fs')
 const co = require('co');
 const helpers = require('../lib/helpers')
 
-module.exports = {
-  topic: 'tunnels',
-  command: 'socks',
-  description: 'Launch a SOCKS proxy into a dyno',
-  help: 'Usage: heroku tunnels:socks',
-  args: [],
-  flags: [{ name: 'dyno', char: 'd', hasValue: true }],
-  needsApp: true,
-  needsAuth: true,
-  run: cli.command(co.wrap(run))
+module.exports = function(topic, command) {
+  return {
+    topic: topic,
+    command: command,
+    description: 'Launch a SOCKS proxy into a dyno',
+    help: `Usage: heroku ${topic}:${command}`,
+    args: [],
+    flags: [{ name: 'dyno', char: 'd', hasValue: true }],
+    needsApp: true,
+    needsAuth: true,
+    run: cli.command(co.wrap(run))
+  }
 };
 
 function * run(context, heroku) {

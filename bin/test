@@ -24,7 +24,7 @@ set -e
 
 heroku plugins:link .
 
-app="tunnels-test-${RANDOM:-$TRAVIS_BUILD_ID}"
+app="heroku-exec-test-${RANDOM:-$TRAVIS_BUILD_ID}"
 echo "Preparing test app ${app}..."
 
 mkdir -p tmp
@@ -46,14 +46,13 @@ git commit -m "first"
 
 trap "{ echo ''; echo 'Cleaning up...'; heroku destroy ${app} --confirm ${app}; cd ../..; rm -rf tmp/${app}; }" EXIT
 
-assert_contains "No Tunnels add-on found!" "$(heroku tunnels:ssh 2>&1)"
+initOutput="$(heroku ps:exec "pwd" 2>&1)"
+assert_contains "TODO init" "$initOutput"
+assert_contains "TODO git commands" "$initOutput"
 
-echo "Initializing Tunnels..."
-heroku tunnels:init
+assert_contains "Heroku-Exec is not running!" "$(heroku ps:status 2>&1)"
 
-assert_contains "No tunnels running!" "$(heroku tunnels:status 2>&1)"
-
-output="$(heroku tunnels:ssh "pwd" 2>&1)"
+output="$(heroku ps:exec "pwd" 2>&1)"
 assert_contains "Establishing credentials" "$output"
 assert_contains "Could not connect to dyno!" "$output"
 
@@ -69,15 +68,15 @@ while [ "up" != "$state" ]; do
   state=$(heroku ps --json | jq .[0].state -r)
 done
 
-assert_equal "/app" "$(heroku tunnels:ssh "pwd")"
+assert_equal "/app" "$(heroku ps:exec "pwd")"
 
-output="$(heroku tunnels:status)"
+output="$(heroku ps:status)"
 assert_contains "web.1" "$output"
 assert_contains "running" "$output"
 assert_contains "up" "$output"
 
 heroku ps:scale web=0
-heroku run:detached "curl -sSL \$TUNNELS_URL | bash -s \$DYNO; echo 'class A{public static void main(String[] a) throws Exception{while(true){Thread.sleep(1000);}}}' > A.java; javac A.java; java A"
+heroku run:detached "curl -sSL \$HEROKU_EXEC_URL | bash -s \$DYNO; echo 'class A{public static void main(String[] a) throws Exception{while(true){Thread.sleep(1000);}}}' > A.java; javac A.java; java A"
 dyno="$(heroku ps --json | jq .[0].name -r)"
 
 # status="null"
@@ -90,11 +89,11 @@ sleep 5
 heroku logs -d $dyno
 
 assert_contains "run." "$dyno"
-dump="$(heroku tunnels:jstack --dyno $dyno)"
+dump="$(heroku java:jstack --dyno $dyno)"
 
 assert_contains "Full thread dump OpenJDK" "$dump"
 
-dump="$(heroku tunnels:jmap --dyno $dyno)"
+dump="$(heroku java:jmap --dyno $dyno)"
 
 assert_contains "#instances" "$dump"
 assert_contains "java.lang.String" "$dump"

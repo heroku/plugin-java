@@ -1,1 +1,1 @@
-# Heroku CLI Plugin for Tunnels
+# Heroku CLI Plugin for Heroku-Exec

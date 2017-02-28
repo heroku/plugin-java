@@ -12,16 +12,18 @@ const helpers = require('../lib/helpers')
 const command = require('../lib/command')
 const ssh = require('../lib/ssh')
 
-module.exports = {
-  topic: 'tunnels',
-  command: 'ssh',
-  description: 'Create an SSH session through the tunnel',
-  help: 'Usage: heroku tunnels:ssh',
-  variableArgs: true,
-  flags: [{ name: 'dyno', char: 'd', hasValue: true }],
-  needsApp: true,
-  needsAuth: true,
-  run: cli.command(co.wrap(run))
+module.exports = function(topic, command) {
+  return {
+    topic: topic,
+    command: command,
+    description: 'Create an SSH session with Heroku-Exec',
+    help: `Usage: heroku ${topic}:${command}`,
+    variableArgs: true,
+    flags: [{ name: 'dyno', char: 'd', hasValue: true }],
+    needsApp: true,
+    needsAuth: true,
+    run: cli.command(co.wrap(run))
+  }
 };
 
 function * run(context, heroku) {
