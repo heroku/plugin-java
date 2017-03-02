@@ -27,9 +27,7 @@ module.exports = function(topic, command) {
 };
 
 function * run(context, heroku) {
-  console.log('one')
   yield helpers.initAddon(context, heroku, function *(configVars) {
-    console.log('two')
     yield helpers.updateClientKey(context, heroku, configVars, function(privateKey, dyno, response) {
       var message = `Connecting to ${cli.color.cyan.bold(dyno)} on ${cli.color.app(context.app)}`
       cli.action(message, {success: false}, co(function* () {
