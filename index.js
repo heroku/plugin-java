@@ -9,12 +9,15 @@ exports.commands = [
   require('./commands/jstack.js')('java', 'jstack'),
   require('./commands/jmap.js')('java', 'jmap'),
 
-  topics = ['ps', 'dyno']
-  for (var i = 0, i < topics.length ; i++) {
-    require('./commands/ssh.js')(topics[i], 'exec'),
-    require('./commands/socks.js')(topics[i], 'socks'),
-    require('./commands/status.js')(topics[i], 'status'),
-    require('./commands/port.js')(topics[i], 'forward'),
-    require('./commands/copy.js')(topics[i], 'copy')
-  }
+  require('./commands/ssh.js')('ps', 'exec'),
+  require('./commands/socks.js')('ps', 'socks'),
+  require('./commands/status.js')('ps', 'status'),
+  require('./commands/port.js')('ps', 'forward'),
+  require('./commands/copy.js')('ps', 'copy'),
+
+  require('./commands/ssh.js')('dyno', 'exec'),
+  require('./commands/socks.js')('dyno', 'socks'),
+  require('./commands/status.js')('dyno', 'status'),
+  require('./commands/port.js')('dyno', 'forward'),
+  require('./commands/copy.js')('dyno', 'copy')
 ];

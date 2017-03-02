@@ -26,16 +26,16 @@ module.exports = function(topic, command) {
 };
 
 function * run(context, heroku) {
-  let configVars = yield heroku.get(`/apps/${context.app}/config-vars`)
+  yield helpers.initAddon(context, heroku, function *(configVars) {
+    yield helpers.updateClientKey(context, heroku, configVars, function(privateKey, dyno, response) {
+      var message = `Generating thread dump for ${cli.color.cyan.bold(dyno)} on ${cli.color.app(context.app)}`
+      cli.action(message, {success: false}, co(function* () {
+        cli.hush(response.body);
+        var json = JSON.parse(response.body);
 
-  yield helpers.updateClientKey(context, heroku, configVars, function(privateKey, dyno, response) {
-    var message = `Generating thread dump for ${cli.color.cyan.bold(dyno)} on ${cli.color.app(context.app)}`
-    cli.action(message, {success: false}, co(function* () {
-      cli.hush(response.body);
-      var json = JSON.parse(response.body);
-
-      context.args = [`jps | grep -v "Jps" | tail -n1 | grep -o '^\\S*' | xargs jstack`]
-      ssh.connect(context, json['tunnel_host'], json['client_user'], privateKey)
-    }))
-  })
+        context.args = [`jps | grep -v "Jps" | tail -n1 | grep -o '^\\S*' | xargs jstack`]
+        ssh.connect(context, json['tunnel_host'], json['client_user'], privateKey)
+      }))
+    })
+  });
 }

@@ -28,22 +28,24 @@ module.exports = function(topic, command) {
 };
 
 function * run(context, heroku) {
-  let remotePort = context.args.port;
-  let localPort = context.flags.localPort || remotePort;
-  let configVars = yield heroku.get(`/apps/${context.app}/config-vars`)
-  yield helpers.createSocksProxy(context, heroku, configVars, function(dynoIp, dynoName, socksPort) {
-    cli.log(`Listening on ${cli.color.white.bold(localPort)} and forwarding to ${cli.color.white.bold(`${dynoName}:${remotePort}`)}`)
-    net.createServer(function(connIn) {
-      socks.connect({
-        host: '0.0.0.0',
-        port: remotePort,
-        proxyHost: '127.0.0.1',
-        proxyPort: socksPort,
-        auths: [ socks.auth.None() ]
-      }, function(socket) {
-        connIn.pipe(socket);
-        socket.pipe(connIn);
-      });
-    }).listen(localPort);
+  yield helpers.initAddon(context, heroku, function *(configVars) {
+    let remotePort = context.args.port;
+    let localPort = context.flags.localPort || remotePort;
+
+    yield helpers.createSocksProxy(context, heroku, configVars, function(dynoIp, dynoName, socksPort) {
+      cli.log(`Listening on ${cli.color.white.bold(localPort)} and forwarding to ${cli.color.white.bold(`${dynoName}:${remotePort}`)}`)
+      net.createServer(function(connIn) {
+        socks.connect({
+          host: '0.0.0.0',
+          port: remotePort,
+          proxyHost: '127.0.0.1',
+          proxyPort: socksPort,
+          auths: [ socks.auth.None() ]
+        }, function(socket) {
+          connIn.pipe(socket);
+          socket.pipe(connIn);
+        });
+      }).listen(localPort);
+    });
   });
 }

@@ -47,14 +47,22 @@ git commit -m "first"
 trap "{ echo ''; echo 'Cleaning up...'; heroku destroy ${app} --confirm ${app}; cd ../..; rm -rf tmp/${app}; }" EXIT
 
 initOutput="$(heroku ps:exec "pwd" 2>&1)"
-assert_contains "TODO init" "$initOutput"
-assert_contains "TODO git commands" "$initOutput"
+echo "$initOutput"
+assert_contains "Creating heroku-exec" "$initOutput"
+assert_contains "Adding the Heroku-Exec buildpack" "$initOutput"
+assert_contains "Run the following commands to redeploy your app" "$initOutput"
+assert_contains "git push heroku master" "$initOutput"
+echo "=== test 1: success"
 
 assert_contains "Heroku-Exec is not running!" "$(heroku ps:status 2>&1)"
+echo "=== test 2: success"
 
+heroku ps:exec "pwd"
 output="$(heroku ps:exec "pwd" 2>&1)"
+echo "$output"
 assert_contains "Establishing credentials" "$output"
 assert_contains "Could not connect to dyno!" "$output"
+echo "=== test 3: success"
 
 echo "Deploying..."
 git push heroku master

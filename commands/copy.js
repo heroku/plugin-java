@@ -37,14 +37,15 @@ function * run(context, heroku) {
   if (fs.existsSync(dest)) {
     cli.error(`The local file ${cli.color.white.bold(dest)} already exists!`)
   } else {
-    let configVars = yield heroku.get(`/apps/${context.app}/config-vars`)
-    yield helpers.updateClientKey(context, heroku, configVars, function(privateKey, dyno, response) {
-      var message = `Connecting to ${cli.color.cyan.bold(dyno)} on ${cli.color.app(context.app)}`
-      cli.action(message, {success: false}, co(function* () {
-        cli.hush(response.body);
-        var json = JSON.parse(response.body);
-        ssh.scp(context, json['tunnel_host'], json['client_user'], privateKey, src, dest)
-      }))
-    })
+    yield helpers.initAddon(context, heroku, function *(configVars) {
+      yield helpers.updateClientKey(context, heroku, configVars, function(privateKey, dyno, response) {
+        var message = `Connecting to ${cli.color.cyan.bold(dyno)} on ${cli.color.app(context.app)}`
+        cli.action(message, {success: false}, co(function* () {
+          cli.hush(response.body);
+          var json = JSON.parse(response.body);
+          ssh.scp(context, json['tunnel_host'], json['client_user'], privateKey, src, dest)
+        }))
+      })
+    });
   }
 }

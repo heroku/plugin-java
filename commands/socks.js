@@ -24,6 +24,7 @@ module.exports = function(topic, command) {
 };
 
 function * run(context, heroku) {
-  let configVars = yield heroku.get(`/apps/${context.app}/config-vars`)
-  yield helpers.createSocksProxy(context, heroku, configVars)
+  yield helpers.initAddon(context, heroku, function *(configVars) {
+    yield helpers.createSocksProxy(context, heroku, configVars)
+  });
 }
