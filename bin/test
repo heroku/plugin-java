@@ -53,7 +53,7 @@ assert_contains "Run the following commands to redeploy your app" "$initOutput"
 assert_contains "git push heroku master" "$initOutput"
 echo "=== test 1: success"
 
-assert_contains "Heroku-Exec is not running!" "$(heroku ps:status 2>&1)"
+assert_contains "Heroku-Exec is not running!" "$(heroku ps:exec --status 2>&1)"
 echo "=== test 2: success"
 
 output="$(heroku ps:exec "pwd" 2>&1)"
@@ -75,7 +75,7 @@ done
 
 assert_equal "/app" "$(heroku ps:exec "pwd")"
 
-output="$(heroku ps:status)"
+output="$(heroku ps:exec --status)"
 assert_contains "web.1" "$output"
 assert_contains "running" "$output"
 assert_contains "up" "$output"

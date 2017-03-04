@@ -19,7 +19,9 @@ module.exports = function(topic, command) {
     description: 'Create an SSH session to a dyno with Heroku-Exec',
     help: `Usage: heroku ${topic}:${command}`,
     variableArgs: true,
-    flags: [{ name: 'dyno', char: 'd', hasValue: true }],
+    flags: [
+      { name: 'dyno', char: 'd', hasValue: true },
+      { name: 'status', hasValue: false }],
     needsApp: true,
     needsAuth: true,
     run: cli.command(co.wrap(run))
@@ -28,13 +30,17 @@ module.exports = function(topic, command) {
 
 function * run(context, heroku) {
   yield helpers.initAddon(context, heroku, function *(configVars) {
-    yield helpers.updateClientKey(context, heroku, configVars, function(privateKey, dyno, response) {
-      var message = `Connecting to ${cli.color.cyan.bold(dyno)} on ${cli.color.app(context.app)}`
-      cli.action(message, {success: false}, co(function* () {
-        cli.hush(response.body);
-        var json = JSON.parse(response.body);
-        ssh.connect(context, json['tunnel_host'], json['client_user'], privateKey);
-      }))
-    })
+    if (context.flags.status) {
+      yield helpers.checkStatus(context, heroku, configVars);
+    } else {
+      yield helpers.updateClientKey(context, heroku, configVars, function(privateKey, dyno, response) {
+        var message = `Connecting to ${cli.color.cyan.bold(dyno)} on ${cli.color.app(context.app)}`
+        cli.action(message, {success: false}, co(function* () {
+          cli.hush(response.body);
+          var json = JSON.parse(response.body);
+          ssh.connect(context, json['tunnel_host'], json['client_user'], privateKey);
+        }))
+      })
+    }
   });
 }
