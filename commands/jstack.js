@@ -18,7 +18,7 @@ module.exports = function(topic, command) {
     description: 'Generate a thread dump for a Java process',
     help: `Usage: heroku ${topic}:${command}`,
     variableArgs: true,
-    flags: [{ name: 'dyno', char: 'd', hasValue: true }],
+    flags: [{ name: 'dyno', char: 'd', hasValue: true, description: 'specify the dyno to connect to' }],
     needsApp: true,
     needsAuth: true,
     run: cli.command(co.wrap(run))

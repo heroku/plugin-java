@@ -21,8 +21,8 @@ module.exports = function(topic, command) {
     help: `Usage: heroku ${topic}:${command} FILENAME`,
     args: [ {name: 'file'} ],
     flags: [
-      { name: 'dyno', char: 'd', hasValue: true },
-      { name: 'output', char: 'o', hasValue: true }],
+      { name: 'dyno', char: 'd', hasValue: true, description: 'specify the dyno to connect to' },
+      { name: 'output', char: 'o', hasValue: true, description: 'the name of the output file' }],
     needsApp: true,
     needsAuth: true,
     run: cli.command(co.wrap(run))

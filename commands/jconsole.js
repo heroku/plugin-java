@@ -16,6 +16,7 @@ module.exports = function(topic, command) {
     description: 'Launch JConsole into an app',
     help: `Usage: heroku ${topic}:${command}`,
     args: [],
+    flags: [{ name: 'dyno', char: 'd', hasValue: true, description: 'specify the dyno to connect to' }],
     needsApp: true,
     needsAuth: true,
     run: cli.command(co.wrap(run))

@@ -19,8 +19,8 @@ module.exports = function(topic, command) {
     help: `Usage: heroku ${topic}:${command} PORT`,
     args: [{name: 'port', optional: false}],
     flags: [
-      { name: 'dyno', char: 'd', hasValue: true },
-      { name: 'localPort', char: 'p', hasValue: true } ],
+      { name: 'dyno', char: 'd', hasValue: true, description: 'specify the dyno to connect to' },
+      { name: 'localPort', char: 'p', hasValue: true, description: 'the local port to use' } ],
     needsApp: true,
     needsAuth: true,
     run: cli.command(co.wrap(run))
