@@ -20,8 +20,8 @@ module.exports = function(topic, command) {
     help: `Usage: heroku ${topic}:${command}`,
     variableArgs: true,
     flags: [
-      { name: 'dyno', char: 'd', hasValue: true },
-      { name: 'status', hasValue: false }],
+      { name: 'dyno', char: 'd', hasValue: true, description: 'specify the dyno to connect to' },
+      { name: 'status', hasValue: false, description: 'lists the status of the SSH server in the dyno' }],
     needsApp: true,
     needsAuth: true,
     run: cli.command(co.wrap(run))
