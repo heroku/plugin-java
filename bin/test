@@ -48,7 +48,7 @@ trap "{ echo ''; echo 'Cleaning up...'; heroku destroy ${app} --confirm ${app}; 
 
 initOutput="$(heroku ps:exec "pwd" 2>&1)"
 assert_contains "Creating heroku-exec" "$initOutput"
-assert_contains "Adding the Heroku-Exec buildpack" "$initOutput"
+assert_contains "Adding the Heroku Exec buildpack" "$initOutput"
 assert_contains "Run the following commands to redeploy your app" "$initOutput"
 assert_contains "git push heroku master" "$initOutput"
 echo "=== test 1: success"
