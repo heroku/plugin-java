@@ -64,14 +64,17 @@ echo "=== test 3: success"
 echo "Deploying..."
 git push heroku master
 
+echo -n "Waiting for dyno..."
 state="starting"
 while [ "up" != "$state" ]; do
   if [ "starting" != "$state" ]; then
     echo "WARNING: dyno state is \"${state}\""
   fi
-  sleep 1
+  echo -n "."
+  sleep 2
   state=$(heroku ps --json | jq .[0].state -r)
 done
+echo ""
 
 assert_equal "/app" "$(heroku ps:exec "pwd")"
 
