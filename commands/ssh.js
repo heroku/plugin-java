@@ -16,7 +16,7 @@ module.exports = function(topic, command) {
   return {
     topic: topic,
     command: command,
-    description: 'Create an SSH session to a dyno with Heroku-Exec',
+    description: 'Create an SSH session to a dyno',
     help: `Usage: heroku ${topic}:${command}`,
     variableArgs: true,
     flags: [
