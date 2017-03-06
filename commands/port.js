@@ -34,6 +34,7 @@ function * run(context, heroku) {
 
     yield helpers.createSocksProxy(context, heroku, configVars, function(dynoIp, dynoName, socksPort) {
       cli.log(`Listening on ${cli.color.white.bold(localPort)} and forwarding to ${cli.color.white.bold(`${dynoName}:${remotePort}`)}`)
+      cli.log(`Use ${cli.color.magenta('CTRL+C')} to stop port fowarding`)
       net.createServer(function(connIn) {
         socks.connect({
           host: '0.0.0.0',
