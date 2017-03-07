@@ -46,7 +46,7 @@ git commit -m "first"
 
 trap "{ echo ''; echo 'Cleaning up...'; heroku destroy ${app} --confirm ${app}; cd ../..; rm -rf tmp/${app}; }" EXIT
 
-initOutput="$(heroku ps:exec "pwd" 2>&1)"
+initOutput="$(heroku ps:exec ls 2>&1)"
 assert_contains "Creating heroku-exec" "$initOutput"
 assert_contains "Adding the Heroku Exec buildpack" "$initOutput"
 assert_contains "Run the following commands to redeploy your app" "$initOutput"
@@ -56,7 +56,7 @@ echo "=== test 1: success"
 assert_contains "Heroku Exec is not running!" "$(heroku ps:exec --status 2>&1)"
 echo "=== test 2: success"
 
-output="$(heroku ps:exec "pwd" 2>&1)"
+output="$(heroku ps:exec ls 2>&1)"
 assert_contains "Establishing credentials" "$output"
 assert_contains "Could not connect to dyno!" "$output"
 echo "=== test 3: success"
@@ -76,7 +76,7 @@ while [ "up" != "$state" ]; do
 done
 echo ""
 
-assert_equal "/app" "$(heroku ps:exec "pwd")"
+assert_equal "Procfile" "$(heroku ps:exec ls)"
 
 output="$(heroku ps:exec --status)"
 assert_contains "web.1" "$output"
@@ -84,6 +84,7 @@ assert_contains "running" "$output"
 assert_contains "up" "$output"
 
 heroku ps:scale web=0
+heroku config:set HEROKU_EXEC_DYNO="run.*"
 heroku run:detached "curl -sSL \$HEROKU_EXEC_URL | bash -s \$DYNO; echo 'class A{public static void main(String[] a) throws Exception{while(true){Thread.sleep(1000);}}}' > A.java; javac A.java; java A"
 dyno="$(heroku ps --json | jq .[0].name -r)"
 
