@@ -46,7 +46,7 @@ git commit -m "first"
 
 trap "{ echo ''; echo 'Cleaning up...'; heroku destroy ${app} --confirm ${app}; cd ../..; rm -rf tmp/${app}; }" EXIT
 
-initOutput="$(heroku ps:exec ls 2>&1)"
+initOutput="$(heroku ps:exec "ls" 2>&1)"
 assert_contains "Creating heroku-exec" "$initOutput"
 assert_contains "Adding the Heroku Exec buildpack" "$initOutput"
 assert_contains "Run the following commands to redeploy your app" "$initOutput"
