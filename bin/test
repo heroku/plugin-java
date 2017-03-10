@@ -84,7 +84,7 @@ assert_contains "running" "$output"
 assert_contains "up" "$output"
 
 heroku ps:scale web=0
-heroku run:detached "curl -sSL \$HEROKU_EXEC_URL | bash -s \$DYNO; echo 'class A{public static void main(String[] a) throws Exception{while(true){Thread.sleep(1000);}}}' > A.java; javac A.java; java A"
+heroku run:detached "echo 'class A{public static void main(String[] a) throws Exception{while(true){Thread.sleep(1000);}}}' > A.java; javac A.java; java A"
 dyno="$(heroku ps --json | jq .[0].name -r)"
 
 # status="null"
@@ -105,7 +105,6 @@ dump="$(heroku java:jmap --dyno $dyno)"
 
 assert_contains "#instances" "$dump"
 assert_contains "java.lang.String" "$dump"
-# assert_contains "Total" "$dump"
 
 echo ""
 echo "SUCCESS: All tests passed!"
