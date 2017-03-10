@@ -84,7 +84,6 @@ assert_contains "running" "$output"
 assert_contains "up" "$output"
 
 heroku ps:scale web=0
-heroku config:set HEROKU_EXEC_DYNO="run.*"
 heroku run:detached "curl -sSL \$HEROKU_EXEC_URL | bash -s \$DYNO; echo 'class A{public static void main(String[] a) throws Exception{while(true){Thread.sleep(1000);}}}' > A.java; javac A.java; java A"
 dyno="$(heroku ps --json | jq .[0].name -r)"
 
