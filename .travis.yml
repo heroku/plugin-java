@@ -5,3 +5,4 @@ node_js:
 before_install:
 - sh etc/travis-setup.sh
 script: "sh bin/test"
+after_script: heroku keys:remove $USER@`hostname`
