@@ -13,7 +13,7 @@ module.exports = function(topic, command) {
   return {
     topic: topic,
     command: command,
-    description: 'Launch JConsole connected to Heroku',
+    description: 'Launch VisualVM connected to Heroku',
     help: `Usage: heroku ${topic}:${command}`,
     args: [],
     flags: [{ name: 'dyno', char: 'd', hasValue: true, description: 'specify the dyno to connect to' }],
@@ -26,8 +26,8 @@ module.exports = function(topic, command) {
 function * run(context, heroku) {
   yield helpers.initAddon(context, heroku, function *(configVars) {
     yield helpers.createSocksProxy(context, heroku, configVars, function(dyno_ip) {
-      cli.log("Launching JConsole...")
-      child.execFile('jconsole', ['-J-DsocksProxyHost=localhost', '-J-DsocksProxyPort=1080', `${dyno_ip}:1098`])
+      cli.log("Launching VisualVM...")
+      child.execFile('jvisualvm', ['-J-DsocksProxyHost=localhost', '-J-DsocksProxyPort=1080', `--openjmx=${dyno_ip}:1098`])
       cli.log(`Use ${cli.color.magenta('CTRL+C')} to stop the connection`)
     })
   });
