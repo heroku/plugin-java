@@ -21,7 +21,7 @@
   "dependencies": {
     "heroku-cli-util": "^6.0.15",
     "socksv5": "0.0.6",
-    "ssh2": "0.4.11",
+    "ssh2": "0.5.4",
     "keypair": "^1.0.1",
     "node-forge": "^0.6.47"
   }
