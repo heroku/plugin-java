@@ -27,7 +27,13 @@ function * run(context, heroku) {
   yield helpers.initAddon(context, heroku, function *(configVars) {
     yield helpers.createSocksProxy(context, heroku, configVars, function(dyno_ip) {
       cli.log("Launching VisualVM...")
-      child.execFile('jvisualvm', ['-J-DsocksProxyHost=localhost', '-J-DsocksProxyPort=1080', `--openjmx=${dyno_ip}:1098`])
+      child.execFile('jvisualvm', ['-J-DsocksProxyHost=localhost', '-J-DsocksProxyPort=1080', `--openjmx=${dyno_ip}:1098`], (error, stdout, stderr) => {
+        if (error) {
+          cli.log("Could not open VisualVM. Make sure it is on your PATH environment variable.")
+          cli.log("Leave this process running and execute the following command in another terminal:")
+          cli.log(cli.color.magenta(`jvisualvm -J-DsocksProxyHost=localhost -J-DsocksProxyPort=1080 --openjmx=${dyno_ip}:1098`));
+        }
+      })
       cli.log(`Use ${cli.color.magenta('CTRL+C')} to stop the connection`)
     })
   });
