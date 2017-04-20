@@ -46,21 +46,6 @@ git commit -m "first"
 
 trap "{ echo ''; echo 'Cleaning up...'; heroku destroy ${app} --confirm ${app}; cd ../..; rm -rf tmp/${app}; }" EXIT
 
-initOutput="$(heroku ps:exec "ls" 2>&1)"
-assert_contains "Creating heroku-exec" "$initOutput"
-assert_contains "Adding the Heroku Exec buildpack" "$initOutput"
-assert_contains "Run the following commands to redeploy your app" "$initOutput"
-assert_contains "git push heroku master" "$initOutput"
-echo "=== test 1: success"
-
-assert_contains "Heroku Exec is not running!" "$(heroku ps:exec --status 2>&1)"
-echo "=== test 2: success"
-
-output="$(heroku ps:exec ls 2>&1)"
-assert_contains "Establishing credentials" "$output"
-assert_contains "Could not connect to dyno!" "$output"
-echo "=== test 3: success"
-
 echo "Deploying..."
 git push heroku master
 
@@ -75,14 +60,6 @@ while [ "up" != "$state" ]; do
   state=$(heroku ps --json | jq .[0].state -r)
 done
 echo ""
-
-heroku ps:exec pwd
-# assert_equal "/app" "$(heroku ps:exec pwd)"
-
-output="$(heroku ps:exec --status)"
-assert_contains "web.1" "$output"
-assert_contains "running" "$output"
-assert_contains "up" "$output"
 
 heroku ps:scale web=0
 heroku run:detached "echo 'class A{public static void main(String[] a) throws Exception{while(true){Thread.sleep(1000);}}}' > A.java; javac A.java; java A"
