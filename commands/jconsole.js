@@ -3,11 +3,11 @@
 const child = require('child_process');
 const path = require('path');
 const cli = require('heroku-cli-util');
+const exec = require('heroku-exec-util');
 const https = require('https')
 const http = require('http')
 const fs = require('fs')
 const co = require('co');
-const helpers = require('../lib/helpers')
 
 module.exports = function(topic, command) {
   return {
@@ -24,8 +24,8 @@ module.exports = function(topic, command) {
 };
 
 function * run(context, heroku) {
-  yield helpers.initAddon(context, heroku, function *(configVars) {
-    yield helpers.createSocksProxy(context, heroku, configVars, function(dyno_ip) {
+  yield exec.initAddon(context, heroku, function *(configVars) {
+    yield exec.createSocksProxy(context, heroku, configVars, function(dyno_ip) {
       cli.log("Launching JConsole...")
       child.execFile('jconsole', ['-J-DsocksProxyHost=localhost', '-J-DsocksProxyPort=1080', `${dyno_ip}:1098`], (error, stdout, stderr) => {
         if (error) {
