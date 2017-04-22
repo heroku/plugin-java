@@ -40,7 +40,9 @@ echo "web: ${web}" > Procfile
 
 echo "Creating Heroku app..."
 heroku create ${app}
-heroku buildpacks:set https://github.com/ryandotsmith/null-buildpack
+heroku buildpacks:add https://github.com/heroku/exec-buildpack
+heroku buildpacks:add https://github.com/ryandotsmith/null-buildpack
+heroku addons:create heroku-exec:test
 git add Procfile
 git commit -m "first"
 
@@ -65,22 +67,15 @@ heroku ps:scale web=0
 heroku run:detached "echo 'class A{public static void main(String[] a) throws Exception{while(true){Thread.sleep(1000);}}}' > A.java; javac A.java; java A"
 dyno="$(heroku ps --json | jq .[0].name -r)"
 
-# status="null"
-# while [ "$status" != "up" ]; do
-#   status="$(heroku ps --json | jq .[0].status -r)"
-# end
-
 sleep 5
 
 heroku logs -d $dyno
 
 assert_contains "run." "$dyno"
 dump="$(heroku java:jstack --dyno $dyno)"
-
 assert_contains "Full thread dump OpenJDK" "$dump"
 
 dump="$(heroku java:jmap --dyno $dyno)"
-
 assert_contains "#instances" "$dump"
 assert_contains "java.lang.String" "$dump"
 
