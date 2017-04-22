@@ -1,7 +1,7 @@
 language: node_js
 sudo: required
 node_js:
-- '6.4.0'
+- '7.8.0'
 before_install:
 - sh etc/travis-setup.sh
 script: "sh bin/test"
