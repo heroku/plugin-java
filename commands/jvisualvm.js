@@ -24,7 +24,7 @@ module.exports = function(topic, command) {
 };
 
 function * run(context, heroku) {
-  yield exec.initAddon(context, heroku, function *(configVars) {
+  yield exec.initFeature(context, heroku, function *(configVars) {
     yield exec.createSocksProxy(context, heroku, configVars, function(dyno_ip) {
       cli.log("Launching VisualVM...")
       child.execFile('jvisualvm', ['-J-DsocksProxyHost=localhost', '-J-DsocksProxyPort=1080', `--openjmx=${dyno_ip}:1098`], (error, stdout, stderr) => {

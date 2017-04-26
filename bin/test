@@ -40,15 +40,22 @@ echo "web: ${web}" > Procfile
 
 echo "Creating Heroku app..."
 heroku create ${app}
-heroku buildpacks:add https://github.com/heroku/exec-buildpack
 heroku buildpacks:add https://github.com/ryandotsmith/null-buildpack
-heroku addons:create heroku-exec:test
 git add Procfile
 git commit -m "first"
 
 trap "{ echo ''; echo 'Cleaning up...'; heroku destroy ${app} --confirm ${app}; cd ../..; rm -rf tmp/${app}; }" EXIT
 
 echo "Deploying..."
+git push heroku master
+
+set +e
+output="$(heroku java:jstack)"
+set -e
+assert_contains "Adding the Heroku Exec buildpack" "$output"
+echo "=== test 1: success"
+
+git commit -m "redeploy" --allow-empty
 git push heroku master
 
 echo -n "Waiting for dyno..."
@@ -72,12 +79,18 @@ sleep 5
 heroku logs -d $dyno
 
 assert_contains "run." "$dyno"
+echo "=== test 2: success"
+
+echo "Running: heroku java:jstack --dyno $dyno"
 dump="$(heroku java:jstack --dyno $dyno)"
 assert_contains "Full thread dump OpenJDK" "$dump"
+echo "=== test 3: success"
 
+echo "Running: heroku java:jmap --dyno $dyno"
 dump="$(heroku java:jmap --dyno $dyno)"
 assert_contains "#instances" "$dump"
 assert_contains "java.lang.String" "$dump"
+echo "=== test 4: success"
 
 echo ""
 echo "SUCCESS: All tests passed!"

@@ -25,7 +25,7 @@ module.exports = function(topic, command) {
 };
 
 function * run(context, heroku) {
-  yield exec.initAddon(context, heroku, function *(configVars) {
+  yield exec.initFeature(context, heroku, function *(configVars) {
     yield exec.updateClientKey(context, heroku, configVars, function(privateKey, dyno, response) {
       var message = `Generating thread dump for ${cli.color.cyan.bold(dyno)} on ${cli.color.app(context.app)}`
       cli.action(message, {success: false}, co(function* () {
