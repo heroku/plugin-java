@@ -32,9 +32,10 @@ function * run(context, heroku) {
         cli.hush(response.body);
         var json = JSON.parse(response.body);
 
-        context.args = [`jps | grep -v "Jps" | tail -n1 | grep -o '^\\S*' | xargs jstack`]
+        context.args = [`/app/.jdk/bin/jps | grep -v "Jps" | tail -n1 | grep -o '^\\S*' | xargs /app/.jdk/bin/jstack`]
         exec.connect(context, json['tunnel_host'], json['client_user'], privateKey)
       }))
     })
   });
+  return new Promise(resolve => {})
 }

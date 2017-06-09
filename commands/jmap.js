@@ -39,15 +39,16 @@ function * run(context, heroku) {
 
         if (context.flags.hprof) {
           var dumpFile = context.flags.output || `heapdump-${uuid.v4()}.hprof`
-          context.args = [`jps | grep -v "Jps" | tail -n1 | grep -o '^\\S*' | xargs jmap -dump:format=b,file=${dumpFile}`]
+          context.args = [`/app/.jdk/bin/jps | grep -v "Jps" | tail -n1 | grep -o '^\\S*' | xargs /app/.jdk/bin/jmap -dump:format=b,file=${dumpFile}`]
           exec.connect(context, json['tunnel_host'], json['client_user'], privateKey, () => {
             exec.scp(context, json['tunnel_host'], json['client_user'], privateKey, dumpFile, dumpFile)
           })
         } else {
-          context.args = [`jps | grep -v "Jps" | tail -n1 | grep -o '^\\S*' | xargs jmap -histo`]
+          context.args = [`/app/.jdk/bin/jps | grep -v "Jps" | tail -n1 | grep -o '^\\S*' | xargs /app/.jdk/bin/jmap -histo`]
           exec.connect(context, json['tunnel_host'], json['client_user'], privateKey)
         }
       }))
     })
   });
+  return new Promise(resolve => {})
 }

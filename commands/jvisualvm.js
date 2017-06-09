@@ -37,4 +37,5 @@ function * run(context, heroku) {
       cli.log(`Use ${cli.color.magenta('CTRL+C')} to stop the connection`)
     })
   });
+  return new Promise(resolve => {})
 }
