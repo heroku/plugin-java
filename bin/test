@@ -20,6 +20,8 @@ assert_contains() {
   fi
 }
 
+heroku plugins:uninstall heroku-cli-java
+
 set -e
 
 heroku plugins:link .
@@ -40,7 +42,7 @@ echo "web: ${web}" > Procfile
 
 echo "Creating Heroku app..."
 heroku create ${app}
-heroku buildpacks:add https://github.com/ryandotsmith/null-buildpack
+heroku buildpacks:add heroku/jvm
 git add Procfile
 git commit -m "first"
 
