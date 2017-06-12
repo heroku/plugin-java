@@ -1,8 +1,9 @@
 language: node_js
 sudo: required
+dist: trusty
 node_js:
 - '7.8.0'
 before_install:
-- sh etc/travis-setup.sh
+- sh etc/ci-setup.sh
 script: "sh bin/test"
 after_script: heroku keys:remove $USER@`hostname`
