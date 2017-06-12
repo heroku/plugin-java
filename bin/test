@@ -26,7 +26,8 @@ set -e
 
 heroku plugins:link .
 
-app="heroku-exec-test-${RANDOM:-$TRAVIS_BUILD_ID}"
+build_id=${TRAVIS_BUILD_ID:-$(echo $$)}
+app="heroku-exec-test-${RANDOM:-$build_id}"
 echo "Preparing test app ${app}..."
 
 mkdir -p tmp
