@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-[ "$TRAVIS" != "true" ] && echo "Not running on Travis!" && exit 1
+[ "$CI" != "true" ] && echo "Not running on CI!" && exit 1
 
 git config --global user.email ${HEROKU_API_USER:-"heroku-exec@example.com"}
 git config --global user.name 'HerokuExecTester'
@@ -20,6 +20,8 @@ machine git.heroku.com
   password ${HEROKU_API_KEY:-"password"}
 EOF
 
+sudo apt-get -qq update
+sudo apt-get install software-properties-common -y
 curl --fail --retry 3 --retry-delay 1 --connect-timeout 3 --max-time 30 https://cli-assets.heroku.com/install-ubuntu.sh | sh
 
 yes | heroku keys:add
