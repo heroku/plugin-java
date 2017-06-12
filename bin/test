@@ -20,11 +20,9 @@ assert_contains() {
   fi
 }
 
-heroku plugins:uninstall heroku-cli-java
+heroku plugins:link .
 
 set -e
-
-heroku plugins:link .
 
 build_id=${TRAVIS_BUILD_ID:-$(echo $$)}
 app="heroku-exec-test-${RANDOM:-$build_id}"
