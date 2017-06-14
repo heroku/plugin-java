@@ -20,7 +20,6 @@
   "license": "ISC",
   "dependencies": {
     "heroku-cli-util": "^6.0.15",
-    "heroku-exec-util": "0.3.7",
-    "ssh2-streams": "0.1.16"
+    "heroku-exec-util": "0.3.8"
   }
 }
