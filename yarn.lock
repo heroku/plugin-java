@@ -204,9 +204,9 @@ heroku-client@3.0.2:
     is-retry-allowed "^1.0.0"
     tunnel-agent "^0.4.0"
 
-heroku-exec-util@0.3.7:
-  version "0.3.7"
-  resolved "https://registry.yarnpkg.com/heroku-exec-util/-/heroku-exec-util-0.3.7.tgz#3cc006ee43cc8ff09d6448bc2ebea6821f0fb80b"
+heroku-exec-util@0.3.9:
+  version "0.3.9"
+  resolved "https://registry.yarnpkg.com/heroku-exec-util/-/heroku-exec-util-0.3.9.tgz#9e01f02aadcdeb2a2ca3cca48d62eb90237badc9"
   dependencies:
     co-wait "0.0.0"
     heroku-cli-util "^6.0.15"
@@ -214,8 +214,9 @@ heroku-exec-util@0.3.7:
     node-forge "0.6.47"
     smooth-progress "1.0.4"
     socksv5 "git://github.com/heroku/socksv5.git#v0.0.6.1"
-    ssh2 "0.5.4"
-    ssh2-streams "0.1.16"
+    ssh2 "0.5.5"
+    ssh2-streams "0.1.19"
+    temp "0.8.3"
     uuid "3.0.1"
 
 inflight@^1.0.4:
@@ -349,6 +350,10 @@ opn@^3.0.3:
   dependencies:
     object-assign "^4.0.1"
 
+os-tmpdir@^1.0.0:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/os-tmpdir/-/os-tmpdir-1.0.2.tgz#bbe67406c79aa85c5cfec766fe5734555dfa1274"
+
 path-is-absolute@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/path-is-absolute/-/path-is-absolute-1.0.1.tgz#174b9268735534ffbc7ace6bf53a5a9e1b5c5f5f"
@@ -366,6 +371,10 @@ redeyed@~1.0.0:
   resolved "https://registry.yarnpkg.com/redeyed/-/redeyed-1.0.1.tgz#e96c193b40c0816b00aec842698e61185e55498a"
   dependencies:
     esprima "~3.0.0"
+
+rimraf@~2.2.6:
+  version "2.2.8"
+  resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.2.8.tgz#e439be2aaee327321952730f99a8929e4fc50582"
 
 safe-buffer@^5.0.1:
   version "5.1.0"
@@ -391,19 +400,19 @@ sprintf@0.1.x:
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/sprintf/-/sprintf-0.1.5.tgz#8f83e39a9317c1a502cb7db8050e51c679f6edcf"
 
-ssh2-streams@0.1.16, ssh2-streams@~0.1.15:
-  version "0.1.16"
-  resolved "https://registry.yarnpkg.com/ssh2-streams/-/ssh2-streams-0.1.16.tgz#ac9d3ce9e062f8cf08fcce5b3a274b6d5cecdc54"
+ssh2-streams@0.1.19, ssh2-streams@~0.1.18:
+  version "0.1.19"
+  resolved "https://registry.yarnpkg.com/ssh2-streams/-/ssh2-streams-0.1.19.tgz#f80ececc2de1a39e1aa64469851ec32bc96b83f9"
   dependencies:
     asn1 "~0.2.0"
     semver "^5.1.0"
     streamsearch "~0.1.2"
 
-ssh2@0.5.4:
-  version "0.5.4"
-  resolved "https://registry.yarnpkg.com/ssh2/-/ssh2-0.5.4.tgz#1bf6b6b28c96eaef267f4d6c46a5a2517a599e27"
+ssh2@0.5.5:
+  version "0.5.5"
+  resolved "https://registry.yarnpkg.com/ssh2/-/ssh2-0.5.5.tgz#c7781ecd2ece7304a253cf620fab5a5c22bb2235"
   dependencies:
-    ssh2-streams "~0.1.15"
+    ssh2-streams "~0.1.18"
 
 stack-trace@0.0.x:
   version "0.0.10"
@@ -428,6 +437,13 @@ supports-color@^3.1.2:
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-3.2.3.tgz#65ac0504b3954171d8a64946b2ae3cbb8a5f54f6"
   dependencies:
     has-flag "^1.0.0"
+
+temp@0.8.3:
+  version "0.8.3"
+  resolved "https://registry.yarnpkg.com/temp/-/temp-0.8.3.tgz#e0c6bc4d26b903124410e4fed81103014dfc1f59"
+  dependencies:
+    os-tmpdir "^1.0.0"
+    rimraf "~2.2.6"
 
 timed-out@^4.0.0:
   version "4.0.1"
