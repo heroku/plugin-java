@@ -204,9 +204,9 @@ heroku-client@3.0.2:
     is-retry-allowed "^1.0.0"
     tunnel-agent "^0.4.0"
 
-heroku-exec-util@0.3.9:
-  version "0.3.9"
-  resolved "https://registry.yarnpkg.com/heroku-exec-util/-/heroku-exec-util-0.3.9.tgz#9e01f02aadcdeb2a2ca3cca48d62eb90237badc9"
+heroku-exec-util@0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/heroku-exec-util/-/heroku-exec-util-0.4.0.tgz#90ee5dcbd171ab61748aaddb29deda3e7ebf53af"
   dependencies:
     co-wait "0.0.0"
     heroku-cli-util "^6.0.15"
@@ -215,7 +215,6 @@ heroku-exec-util@0.3.9:
     smooth-progress "1.0.4"
     socksv5 "git://github.com/heroku/socksv5.git#v0.0.6.1"
     ssh2 "0.5.5"
-    ssh2-streams "0.1.19"
     temp "0.8.3"
     uuid "3.0.1"
 
@@ -400,7 +399,7 @@ sprintf@0.1.x:
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/sprintf/-/sprintf-0.1.5.tgz#8f83e39a9317c1a502cb7db8050e51c679f6edcf"
 
-ssh2-streams@0.1.19, ssh2-streams@~0.1.18:
+ssh2-streams@~0.1.18:
   version "0.1.19"
   resolved "https://registry.yarnpkg.com/ssh2-streams/-/ssh2-streams-0.1.19.tgz#f80ececc2de1a39e1aa64469851ec32bc96b83f9"
   dependencies:
