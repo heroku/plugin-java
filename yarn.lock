@@ -204,9 +204,9 @@ heroku-client@^3.0.2:
     is-retry-allowed "^1.0.0"
     tunnel-agent "^0.6.0"
 
-heroku-exec-util@0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/heroku-exec-util/-/heroku-exec-util-0.5.0.tgz#fea60345149671aee1f59329803fa24d2d2df44e"
+heroku-exec-util@0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/heroku-exec-util/-/heroku-exec-util-0.5.1.tgz#292c6e0046ffa19f0677cfd8153e8ef519269e5a"
   dependencies:
     co-wait "0.0.0"
     heroku-cli-util "^6.0.15"
