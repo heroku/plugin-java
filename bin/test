@@ -45,16 +45,12 @@ heroku buildpacks:add heroku/jvm
 git add Procfile
 git commit -m "first"
 
+heroku features:enable runtime-heroku-exec
+
 trap "{ echo ''; echo 'Cleaning up...'; heroku destroy ${app} --confirm ${app}; cd ../..; rm -rf tmp/${app}; }" EXIT
 
 echo "Deploying..."
 git push heroku master
-
-set +e
-output="$(heroku java:jstack)"
-set -e
-assert_contains "Adding the Heroku Exec buildpack" "$output"
-echo "=== test 1: success"
 
 git commit -m "redeploy" --allow-empty
 git push heroku master
