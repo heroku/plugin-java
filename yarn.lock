@@ -146,9 +146,9 @@ heroku-client@^3.0.2:
     is-retry-allowed "^1.0.0"
     tunnel-agent "^0.6.0"
 
-heroku-exec-util@0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/heroku-exec-util/-/heroku-exec-util-0.6.0.tgz#f991291cc07a2230b295e24482bd63fac50647f2"
+heroku-exec-util@0.6.2:
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/heroku-exec-util/-/heroku-exec-util-0.6.2.tgz#dae93238bcbb71cab060008d6914d8ccab09ca63"
   dependencies:
     "@heroku/socksv5" "^0.0.9"
     co-wait "0.0.0"
