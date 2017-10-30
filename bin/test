@@ -20,6 +20,17 @@ assert_contains() {
   fi
 }
 
+assert_file_contains() {
+  local expected="${1}"
+  local actual="${2}"
+  if cat $actual | grep -qi "$expected"; then
+    :
+  else
+    echo "\nFAILED: expected ${expected} to be found in ${actual}"
+    exit 1
+  fi
+}
+
 heroku plugins:link .
 
 set -e
@@ -83,11 +94,17 @@ dump="$(heroku java:jstack --dyno $dyno)"
 assert_contains "Full thread dump OpenJDK" "$dump"
 echo "=== test 3: success"
 
+echo "Running: heroku java:jstack --dyno $dyno -o jstack.txt"
+heroku java:jstack --dyno $dyno -o jstack.txt
+assert_file_contains "Full thread dump OpenJDK" "jstack.txt"
+echo "=== test 4: success"
+rm jstack.txt
+
 echo "Running: heroku java:jmap --dyno $dyno"
 dump="$(heroku java:jmap --dyno $dyno)"
 assert_contains "#instances" "$dump"
 assert_contains "java.lang.String" "$dump"
-echo "=== test 4: success"
+echo "=== test 5: success"
 
 echo ""
 echo "SUCCESS: All tests passed!"

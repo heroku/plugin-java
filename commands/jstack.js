@@ -17,7 +17,10 @@ module.exports = function(topic, command) {
     description: 'Generate a thread dump for a Java process',
     help: `Usage: heroku ${topic}:${command}`,
     variableArgs: true,
-    flags: [{ name: 'dyno', char: 'd', hasValue: true, description: 'specify the dyno to connect to' }],
+    flags: [
+      { name: 'dyno', char: 'd', hasValue: true, description: 'specify the dyno to connect to' },
+      { name: 'output', char: 'o', hasValue: true, description: 'writes the jstack output to a local file'}
+    ],
     needsApp: true,
     needsAuth: true,
     run: cli.command(co.wrap(run))
@@ -32,8 +35,16 @@ function * run(context, heroku) {
         cli.hush(response.body);
         var json = JSON.parse(response.body);
 
-        context.args = [`/app/.jdk/bin/jps | grep -v "Jps" | tail -n1 | grep -o '^\\S*' | xargs /app/.jdk/bin/jstack`]
-        exec.connect(context, json['tunnel_host'], json['client_user'], privateKey)
+        if (context.flags.output) {
+          var dumpFile = context.flags.output
+          context.args = [`/app/.jdk/bin/jps | grep -v "Jps" | tail -n1 | grep -o '^\\S*' | xargs /app/.jdk/bin/jstack > ${dumpFile}`]
+          exec.connect(context, json['tunnel_host'], json['client_user'], privateKey, () => {
+            exec.scp(context, json['tunnel_host'], json['client_user'], privateKey, dumpFile, dumpFile)
+          })
+        } else {
+          context.args = [`/app/.jdk/bin/jps | grep -v "Jps" | tail -n1 | grep -o '^\\S*' | xargs /app/.jdk/bin/jstack`]
+          exec.connect(context, json['tunnel_host'], json['client_user'], privateKey)
+        }
       }))
     })
   });
