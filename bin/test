@@ -31,7 +31,7 @@ assert_file_contains() {
   fi
 }
 
-heroku plugins:link .
+heroku plugins:link . --force
 
 set -e
 
@@ -49,6 +49,7 @@ echo "Creating git repo..."
 git init
 web="ruby -rwebrick -e\"s=WEBrick::HTTPServer.new(:BindAddress => '0.0.0.0', :Port => \$PORT, :DocumentRoot => Dir.pwd); s.mount_proc('/'){|q,r| r.body='Hello'}; s.start\""
 echo "web: ${web}" > Procfile
+echo "worker: echo 'class A{public static void main(String[] a) throws Exception{while(true){Thread.sleep(1000);}}}' > A.java; javac A.java; java A" >> Procfile
 
 echo "Creating Heroku app..."
 heroku create ${app}
@@ -79,14 +80,14 @@ done
 echo ""
 
 heroku ps:scale web=0
-heroku run:detached "echo 'class A{public static void main(String[] a) throws Exception{while(true){Thread.sleep(1000);}}}' > A.java; javac A.java; java A"
-dyno="$(heroku ps --json | jq .[0].name -r)"
+heroku ps:scale worker=1
+dyno="worker.1"
 
-sleep 5
+sleep 10
 
 heroku logs -d $dyno
 
-assert_contains "run." "$dyno"
+assert_contains "worker." "$dyno"
 echo "=== test 2: success"
 
 echo "Running: heroku java:jstack --dyno $dyno"
