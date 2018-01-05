@@ -31,6 +31,36 @@ assert_file_contains() {
   fi
 }
 
+wait_for() {
+  local cmd="${1}"
+  sleep 2
+  attempts=0
+  until $(${cmd}); do
+    attempts=$((attempts+1))
+    if [ $attempts -gt 10 ]; then
+      echo "Too many attempts waiting for service!"
+      exit 1
+    fi
+    sleep 2
+  done
+}
+
+wait_for_dyno() {
+  local dyno=${1:-web}
+  echo -n "Waiting for dyno..."
+  state="starting"
+  while [ "up" != "$state" ]; do
+    if [ "starting" != "$state" ] && [ "provisioning" != "$state" ]; then
+      echo "WARNING: dyno state is \"${state}\""
+    fi
+    echo -n "."
+    sleep 4
+    state=$(heroku ps ${dyno} --json | jq .[0].state -r)
+  done
+  sleep 5
+  echo ""
+}
+
 heroku plugins:link . --force
 
 set -e
@@ -81,13 +111,13 @@ echo ""
 
 heroku ps:scale web=0
 heroku ps:scale worker=1
-dyno="worker.1"
 
-sleep 10
+dyno="worker.1"
+wait_for_dyno "worker"
+echo "Dyno ${dyno} is ready!"
 
 heroku logs -d $dyno
 
-assert_contains "worker." "$dyno"
 echo "=== test 2: success"
 
 echo "Running: heroku java:jstack --dyno $dyno"
