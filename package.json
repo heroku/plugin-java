@@ -19,7 +19,7 @@
   ],
   "license": "ISC",
   "dependencies": {
-    "heroku-cli-util": "^6.0.15",
-    "heroku-exec-util": "0.6.2"
+    "heroku-cli-util": "6.2.11",
+    "heroku-exec-util": "0.6.3"
   }
 }
