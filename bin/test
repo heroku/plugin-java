@@ -61,9 +61,9 @@ wait_for_dyno() {
   echo ""
 }
 
-heroku plugins:link . --force
-
 set -e
+
+heroku plugins:link .
 
 build_id=${TRAVIS_BUILD_ID:-$(echo $$)}
 app="heroku-exec-test-${RANDOM:-$build_id}"
