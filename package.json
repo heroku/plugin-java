@@ -12,6 +12,10 @@
     "test": "mocha",
     "depcheck": "depcheck || true"
   },
+  "files": [
+    "/index.js",
+    "/commands"
+   ],
   "keywords": [
     "heroku",
     "cli",
