@@ -63,6 +63,9 @@ wait_for_dyno() {
 
 set -e
 
+export HEROKU_API_TOKEN="$(heroku auth:token)"
+yarn test
+
 heroku plugins:link .
 
 build_id=${TRAVIS_BUILD_ID:-$(echo $$)}
