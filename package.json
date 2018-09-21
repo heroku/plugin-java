@@ -1,12 +1,12 @@
 {
-  "name": "heroku-cli-java",
-  "version": "2.3.2",
+  "name": "@heroku-cli/plugin-java",
+  "version": "1.0.0",
   "description": "Heroku Java CLI",
   "main": "index.js",
   "author": "Joe Kutner",
-  "repository": "heroku/heroku-cli-java",
+  "repository": "heroku/plugin-java",
   "bugs": {
-    "url": "https://github.com/heroku/heroku-cli-java/issues"
+    "url": "https://github.com/heroku/plugin-java/issues"
   },
   "scripts": {
     "test": "mocha",
