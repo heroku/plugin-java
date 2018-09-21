@@ -63,7 +63,7 @@ wait_for_dyno() {
 
 set -e
 
-export HEROKU_API_TOKEN="$(heroku auth:token)"
+export HEROKU_API_KEY="$(heroku auth:token)"
 yarn test
 
 heroku plugins:link .

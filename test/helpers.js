@@ -11,5 +11,5 @@ if (process.env.HEROKU_API_TOKEN != undefined) {
 } else if (process.env.HEROKU_API_KEY != undefined) {
   global.apiKey = process.env.HEROKU_API_KEY;
 } else {
-  throw new Error("HEROKU_API_TOKEN is not set!");
+  throw new Error("HEROKU_API_KEY is not set!");
 }

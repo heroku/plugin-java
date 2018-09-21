@@ -2,8 +2,8 @@
 
 [ "$CI" != "true" ] && echo "Not running on CI!" && exit 1
 
-git config --global user.email ${HEROKU_API_USER:-"heroku-exec@example.com"}
-git config --global user.name 'HerokuExecTester'
+git config --global user.email ${HEROKU_API_USER:-"heroku-plugin-java@example.com"}
+git config --global user.name 'HerokuPluginJavaTester'
 
 cat <<EOF >> ~/.ssh/config
 Host heroku.com
@@ -16,7 +16,7 @@ EOF
 
 cat <<EOF >> ~/.netrc
 machine git.heroku.com
-  login ${HEROKU_API_USER:-"heroku-exec@example.com"}
+  login ${HEROKU_API_USER:-"heroku-plugin-java@example.com"}
   password ${HEROKU_API_KEY:-"password"}
 EOF
 

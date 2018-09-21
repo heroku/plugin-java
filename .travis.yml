@@ -4,6 +4,11 @@ dist: trusty
 node_js:
 - '9.11.1'
 before_install:
-- bash etc/ci-setup.sh
+- bash bin/ci-setup
 script: "bash bin/test"
 after_script: heroku keys:remove $USER@`hostname`
+matrix:
+  fast_finish: true
+  include:
+    - jdk: oraclejdk8
+    - jdk: oraclejdk9
