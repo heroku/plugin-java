@@ -22,6 +22,9 @@
     "cli",
     "heroku-plugin"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "license": "ISC",
   "dependencies": {
     "heroku-cli-util": "^8.0.8",
