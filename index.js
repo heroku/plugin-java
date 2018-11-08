@@ -1,8 +1,10 @@
 'use strict';
-exports.topic = {
-  name: 'java',
-  description: 'Client tools for Java on Heroku'
-};
+exports.topics = [
+  { name: 'java', description: 'Client tools for Java on Heroku' },
+  { name: 'deploy', description: 'Deploy WAR and JAR files' },
+  { name: 'war', description: 'Manage WAR files' },
+  { name: 'jar', description: 'Manage JAR files' }
+];
 
 exports.commands = [
   require('./commands/jconsole.js')('java', 'jconsole'),
