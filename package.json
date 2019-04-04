@@ -9,7 +9,7 @@
     "url": "https://github.com/heroku/plugin-java/issues"
   },
   "scripts": {
-    "vendor": "node scripts/download.js",
+    "vendor": "node scripts/vendor.js",
     "test": "mocha",
     "depcheck": "depcheck || true"
   },
