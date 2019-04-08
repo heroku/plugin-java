@@ -1,6 +1,11 @@
 const fs = require('fs');
 const fetch = require('node-fetch');
 const crypto = require('crypto');
+const herokuDeployConfig = require('../package.json')['heroku-deploy']
+const version = herokuDeployConfig.version;
+const file = `lib/heroku-deploy-complete.jar`;
+const url = `http://repo1.maven.apache.org/maven2/com/heroku/sdk/heroku-deploy-complete/${version}/heroku-deploy-complete-${version}.jar`;
+const sha = herokuDeployConfig.sha
 
 function checkSha(file, expectedSha) {
   fs.readFile(file, function(err, data) {
@@ -29,11 +34,6 @@ async function download(url, file, callback) {
     });
   });}
 
-
-const version = require('../package.json')['heroku-deploy'].version;
-const file = `lib/heroku-deploy-complete.jar`;
-const url = `http://repo1.maven.apache.org/maven2/com/heroku/sdk/heroku-deploy-complete/${version}/heroku-deploy-complete-${version}.jar`;
-const sha = '42b710f3db0d437c825ca4321778b7a7e7f185b2'
 
 console.log(`Downloading ${file} from ${url}`)
 download(url, file, () => {
