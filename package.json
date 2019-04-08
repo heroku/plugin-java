@@ -9,6 +9,7 @@
     "url": "https://github.com/heroku/plugin-java/issues"
   },
   "scripts": {
+    "vendor": "node scripts/vendor.js",
     "test": "mocha",
     "depcheck": "depcheck || true"
   },
@@ -30,6 +31,10 @@
     "heroku-cli-util": "^8.0.8",
     "heroku-exec-util": "0.7.3"
   },
+  "heroku-deploy": {
+    "version": "2.0.8",
+    "sha": "42b710f3db0d437c825ca4321778b7a7e7f185b2"
+  },
   "devDependencies": {
     "fixture-stdout": "0.2.1",
     "chai": "^3.2.0",
@@ -40,6 +45,7 @@
     "mocha": "^2.2.4",
     "wrench": "^1.5.8",
     "unexpected": "10.13.2",
-    "tmp": "0.0.28"
+    "tmp": "0.0.28",
+    "node-fetch": "^2.3.0"
   }
 }
