@@ -113,6 +113,8 @@ Available options include:
  -i, --includes FILES   # list of files to include in the slug
 ```
 
+The `--includes` option may contain a list of files separated by a `;` or `:` on Windows or Mac respectively. 
+
 ### Customizing your deployment
 
 You can customize the command used to run your application by creating a `Procfile` in the *same directory* as your run the `heroku jar:deploy` command. For example:
