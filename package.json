@@ -32,20 +32,20 @@
     "heroku-exec-util": "0.7.3"
   },
   "heroku-deploy": {
-    "version": "2.0.11",
-    "sha": "42b710f3db0d437c825ca4321778b7a7e7f185b2"
+    "version": "2.0.12",
+    "sha": "7812a9d0f876088aa5a9f8609567b38454151e41"
   },
   "devDependencies": {
-    "fixture-stdout": "0.2.1",
     "chai": "^3.2.0",
-    "depcheck": "^0.4.7",
+    "depcheck": "^0.8.3",
     "dir-compare": "^0.0.2",
+    "fixture-stdout": "0.2.1",
     "fs-extra": "^0.23.1",
     "heroku-client": "^3.0.0-beta2",
     "mocha": "^2.2.4",
-    "wrench": "^1.5.8",
-    "unexpected": "10.13.2",
+    "node-fetch": "^2.3.0",
     "tmp": "0.0.28",
-    "node-fetch": "^2.3.0"
+    "unexpected": "10.13.2",
+    "wrench": "^1.5.8"
   }
 }
