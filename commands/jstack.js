@@ -1,14 +1,8 @@
 'use strict';
 
-const child = require('child_process');
 const cli = require('heroku-cli-util');
 const exec = require('heroku-exec-util');
 const co = require('co');
-const Client = require('ssh2').Client;
-const https = require('https')
-const url = require('url');
-const tty = require('tty')
-const stream = require('stream')
 
 module.exports = function(topic, command) {
   return {
