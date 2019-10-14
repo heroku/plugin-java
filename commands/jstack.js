@@ -32,12 +32,12 @@ function * run(context, heroku) {
         if (context.flags.output) {
           var dumpFile = context.flags.output
           context.args = [`/app/.jdk/bin/jps | grep -v "Jps" | tail -n1 | grep -o '^\\S*' | xargs /app/.jdk/bin/jstack > ${dumpFile}`]
-          exec.connect(context, json['tunnel_host'], json['client_user'], privateKey, () => {
-            exec.scp(context, json['tunnel_host'], json['client_user'], privateKey, dumpFile, dumpFile)
+          exec.connect(context, json['tunnel_host'], json['client_user'], privateKey, json['proxy_public_key'], () => {
+            exec.scp(context, json['tunnel_host'], json['client_user'], privateKey, json['proxy_public_key'], dumpFile, dumpFile)
           })
         } else {
           context.args = [`/app/.jdk/bin/jps | grep -v "Jps" | tail -n1 | grep -o '^\\S*' | xargs /app/.jdk/bin/jstack`]
-          exec.connect(context, json['tunnel_host'], json['client_user'], privateKey)
+          exec.connect(context, json['tunnel_host'], json['client_user'], privateKey, json['proxy_public_key'])
         }
       }))
     })
