@@ -5,15 +5,6 @@
 git config --global user.email ${HEROKU_API_USER:-"heroku-plugin-java@example.com"}
 git config --global user.name 'HerokuPluginJavaTester'
 
-cat <<EOF >> ~/.ssh/config
-Host heroku.com
-    StrictHostKeyChecking no
-    CheckHostIP no
-    UserKnownHostsFile=/dev/null
-Host github.com
-    StrictHostKeyChecking no
-EOF
-
 cat <<EOF >> ~/.netrc
 machine git.heroku.com
   login ${HEROKU_API_USER:-"heroku-plugin-java@example.com"}
