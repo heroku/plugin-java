@@ -694,10 +694,10 @@ heroku-client@^3.0.0-beta2, heroku-client@^3.0.7:
     is-retry-allowed "^1.0.0"
     tunnel-agent "^0.6.0"
 
-heroku-exec-util@0.7.3:
-  version "0.7.3"
-  resolved "https://registry.yarnpkg.com/heroku-exec-util/-/heroku-exec-util-0.7.3.tgz#38ac58c1afe128af8b9b7a206cdf105e627c52a0"
-  integrity sha512-fRYqhBJKJhZ21zjMVEYAK6oFp+fMUXvQs5L8+l7d6QEjOX/jYTxvFEgEY3Ome9Wxbe/790fZA8ca7T86JUO3Ow==
+heroku-exec-util@0.7.5:
+  version "0.7.5"
+  resolved "https://registry.yarnpkg.com/heroku-exec-util/-/heroku-exec-util-0.7.5.tgz#2de5a6213e07e96c3a51e64d31ea0e9c2fe7f230"
+  integrity sha512-br2hIJN0y0yO+EOxV9qn+i6zhRpZTWa+ECKSpjwtAHsG3dFp+cZkHoVm6QxC/9XypCILFBN0LRlOoVNWs/IUhQ==
   dependencies:
     "@heroku/socksv5" "^0.0.9"
     co-wait "0.0.0"

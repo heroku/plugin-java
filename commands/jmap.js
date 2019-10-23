@@ -1,14 +1,8 @@
 'use strict';
 
-const child = require('child_process');
 const cli = require('heroku-cli-util');
 const exec = require('heroku-exec-util');
 const co = require('co');
-const Client = require('ssh2').Client;
-const https = require('https')
-const url = require('url');
-const tty = require('tty')
-const stream = require('stream')
 const uuid = require('uuid');
 
 module.exports = function(topic, command) {
@@ -40,12 +34,12 @@ function * run(context, heroku) {
         if (context.flags.hprof) {
           var dumpFile = context.flags.output || `heapdump-${uuid.v4()}.hprof`
           context.args = [`/app/.jdk/bin/jps | grep -v "Jps" | tail -n1 | grep -o '^\\S*' | xargs /app/.jdk/bin/jmap -dump:format=b,file=${dumpFile}`]
-          exec.connect(context, json['tunnel_host'], json['client_user'], privateKey, () => {
-            exec.scp(context, json['tunnel_host'], json['client_user'], privateKey, dumpFile, dumpFile)
+          exec.connect(context, json['tunnel_host'], json['client_user'], privateKey, json['proxy_public_key'], () => {
+            exec.scp(context, json['tunnel_host'], json['client_user'], privateKey, json['proxy_public_key'], dumpFile, dumpFile)
           })
         } else {
           context.args = [`/app/.jdk/bin/jps | grep -v "Jps" | tail -n1 | grep -o '^\\S*' | xargs /app/.jdk/bin/jmap -histo`]
-          exec.connect(context, json['tunnel_host'], json['client_user'], privateKey)
+          exec.connect(context, json['tunnel_host'], json['client_user'], privateKey, json['proxy_public_key'])
         }
       }))
     })
