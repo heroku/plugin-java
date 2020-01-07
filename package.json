@@ -32,8 +32,8 @@
     "heroku-exec-util": "0.7.5"
   },
   "heroku-deploy": {
-    "version": "2.0.13",
-    "sha": "da316e565e94b26c19c13e8ad548cbc2114a7dbe"
+    "version": "2.0.14",
+    "sha": "0cd1843a3c88cc4944225bb2f821731a819450d9"
   },
   "devDependencies": {
     "chai": "^3.2.0",
