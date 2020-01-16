@@ -152,7 +152,7 @@ To update the `lib/heroku-deploy-complete.jar`:
 $ bash bin/update <version>
 ```
 
-For a list of versions see [Maven Central](http://repo1.maven.org/maven2/com/heroku/sdk/heroku-deploy-complete/).
+For a list of versions see [Maven Central](https://repo1.maven.org/maven2/com/heroku/sdk/heroku-deploy-complete/).
 
 To publish this plugin:
 
