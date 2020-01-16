@@ -1,6 +1,6 @@
 {
   "name": "@heroku-cli/plugin-java",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "description": "Heroku Java CLI",
   "main": "index.js",
   "author": "Joe Kutner",
