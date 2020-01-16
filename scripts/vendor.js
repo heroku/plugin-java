@@ -4,7 +4,7 @@ const crypto = require('crypto');
 const herokuDeployConfig = require('../package.json')['heroku-deploy']
 const version = herokuDeployConfig.version;
 const file = `lib/heroku-deploy-complete.jar`;
-const url = `http://repo1.maven.apache.org/maven2/com/heroku/sdk/heroku-deploy-complete/${version}/heroku-deploy-complete-${version}.jar`;
+const url = `https://repo1.maven.apache.org/maven2/com/heroku/sdk/heroku-deploy-complete/${version}/heroku-deploy-complete-${version}.jar`;
 const sha = herokuDeployConfig.sha
 
 function checkSha(file, expectedSha) {
