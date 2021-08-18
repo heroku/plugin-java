@@ -1,0 +1,45 @@
+version: 2.1
+
+orbs:
+  heroku: circleci/heroku@1.2.6
+
+executors:
+  openjdk-8:
+    docker:
+      - image: cimg/openjdk:8.0
+  openjdk-11:
+    docker:
+      - image: cimg/openjdk:11.0
+
+jobs:
+  test:
+    parameters:
+      executor:
+        type: "string"
+    executor:
+      name: << parameters.executor >>
+    steps:
+      - heroku/install
+      - checkout
+      - run: sudo apt-get update && sudo apt-get install nodejs npm -y
+      - run: sudo npm install -g yarn
+      - run: yarn install
+      - run: git config --global user.email "heroku-languages-team+circle-ci-jvm-tools-tests@salesforce.com"
+      - run: git config --global user.name "Heroku Languages"
+      - run:
+          name: "Write ~/.netrc"
+          command: |
+            cat >>~/.netrc \<<-EOF
+            machine git.heroku.com
+              login ${HEROKU_API_USER}
+              password ${HEROKU_API_KEY}
+            EOF
+      - run: bin/test
+
+workflows:
+  ci:
+    jobs:
+      - test:
+          matrix:
+            parameters:
+              executor: ["openjdk-8", "openjdk-11"]
