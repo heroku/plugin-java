@@ -1,4 +1,6 @@
-# Heroku CLI Plugin for Java [![Build Status](https://travis-ci.com/heroku/plugin-java.svg?branch=master)](https://travis-ci.com/heroku/plugin-java)
+# Heroku CLI Plugin for Java
+[![](https://badgen.net/github/license/heroku/plugin-java)](LICENSE)
+[![](https://badgen.net/circleci/github/heroku/plugin-java/main)](https://circleci.com/gh/heroku/plugin-java/tree/main)
 
 This project is a [Heroku CLI](https://cli.heroku.com/)
 plugin for working with Java applications on Heroku. It provides commands for:
