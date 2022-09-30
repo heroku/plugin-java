@@ -1,0 +1,36 @@
+name: heroku/plugin-java/ci
+on:
+  push:
+env:
+  HEROKU_API_KEY: xxxxxxx
+  HEROKU_API_USER: xxxxxxx
+jobs:
+  test:
+    runs-on: sfdc-hk-ubuntu-latest
+    strategy:
+      matrix:
+        executor:
+        - openjdk-8
+        - openjdk-11
+    steps:
+    - shell: bash
+      run: |-
+        if [[ $(command -v heroku) == "" ]]; then
+          curl https://cli-assets.heroku.com/install.sh | sh
+        else
+          echo "Heroku is already installed. No operation was performed."
+        fi
+    - uses: actions/checkout@v2
+    - run: sudo apt-get update && sudo apt-get install nodejs npm -y
+    - run: sudo npm install -g yarn
+    - run: yarn install
+    - run: git config --global user.email "heroku-languages-team+circle-ci-jvm-tools-tests@salesforce.com"
+    - run: git config --global user.name "Heroku Languages"
+    - name: Write ~/.netrc
+      run: |-
+        cat >>~/.netrc \<<-EOF
+        machine git.heroku.com
+          login ${HEROKU_API_USER}
+          password ${HEROKU_API_KEY}
+        EOF
+    - run: bin/test
