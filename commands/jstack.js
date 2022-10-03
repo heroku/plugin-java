@@ -1,7 +1,7 @@
 'use strict';
 
 const cli = require('heroku-cli-util');
-const exec = require('heroku-exec-util');
+const exec = require('@heroku-cli/heroku-exec-util');
 const co = require('co');
 
 module.exports = function(topic, command) {
