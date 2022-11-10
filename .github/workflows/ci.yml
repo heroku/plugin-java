@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: "Test (Java ${{ matrix.java-version }})"
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        java-version:
+          - 8
+          - 11
+    env:
+      HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      HEROKU_API_USER: ${{ secrets.HEROKU_API_USER }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          distribution: zulu
+          java-version: ${{ matrix.java-version }}
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Install Heroku CLI
+        run: curl https://cli-assets.heroku.com/install.sh | sh
+      - name: Configure Git
+        run: |
+          git config --global user.email "heroku-languages-team+circle-ci-jvm-tools-tests@salesforce.com"
+          git config --global user.name "Heroku Languages"
+      - name: Write ~/.netrc file
+        run: |
+          cat >>~/.netrc <<-EOF
+            machine git.heroku.com
+              login ${HEROKU_API_USER}
+              password ${HEROKU_API_KEY}
+          EOF
+      - run: yarn install
+      - run: bin/test
