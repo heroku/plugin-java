@@ -43,7 +43,7 @@
     "fs-extra": "^9.1.0",
     "heroku-client": "^3.0.0-beta2",
     "mocha": "^8.4.0",
-    "node-fetch": "^2.3.0",
+    "node-fetch": "^3.2.10",
     "tmp": "0.2.1",
     "unexpected": "12.0.3",
     "wrench": "^1.5.8"
