@@ -166,3 +166,4 @@ $ npm publish
 ## License
 
 MIT
+test
