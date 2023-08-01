@@ -1915,10 +1915,10 @@ unexpected-bluebird@2.9.34-longstack2:
   resolved "https://registry.yarnpkg.com/unexpected-bluebird/-/unexpected-bluebird-2.9.34-longstack2.tgz#49acac753b0556ded6025210ee96182307d2b2c9"
   integrity sha1-SaysdTsFVt7WAlIQ7pYYIwfSssk=
 
-unexpected@13.1.0:
-  version "13.1.0"
-  resolved "https://registry.yarnpkg.com/unexpected/-/unexpected-13.1.0.tgz#fd4299d36d3911d7d8a32152a6461f0046a34791"
-  integrity sha512-5cJNtqeXwuf9hHKl8eD7cZtNhRfcmhNtZmK8XuLg7zQ1K/B7Au860YWblrjd9GnMdmsiYLCrU4mgWLJeBcDt7A==
+unexpected@13.2.1:
+  version "13.2.1"
+  resolved "https://registry.yarnpkg.com/unexpected/-/unexpected-13.2.1.tgz#d21d0dcc633e0ff00754ebdcf6925ac3f9c66799"
+  integrity sha512-6rWjexbMV4DICp8xeKHKql5JTC5No7Mz55wei2YcXGkqBAtAgfzIhFLzbDohRzN/lNtwG6+NuIvMI/0giQXOvA==
   dependencies:
     array-changes "3.0.1"
     array-changes-async "3.0.1"
