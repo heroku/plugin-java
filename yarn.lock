@@ -678,11 +678,11 @@ diff@5.0.0, diff@^5.0.0:
   integrity sha512-/VTCrvm5Z0JGty/BWHljh+BAiw3IK+2j87NGMu8Nwc/f48WoDAC395uomO9ZD117ZOBaHmkX1oyLvkVM/aIT3w==
 
 dir-compare@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/dir-compare/-/dir-compare-4.0.0.tgz#264835502ae5b41e2aa8980a6797cde5440b8bdb"
-  integrity sha512-wC7thVKL3V656tO61rbEDE4LTeeYrUC2pAUL00AaXYghBhjjVNRyBlpH6POzb44ZuK23OSrqF6TbSC/QYeqfAg==
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/dir-compare/-/dir-compare-4.2.0.tgz#d1d4999c14fbf55281071fdae4293b3b9ce86f19"
+  integrity sha512-2xMCmOoMrdQIPHdsTawECdNPwlVFB9zGcz3kuhmBO6U3oU+UQjsue0i8ayLKpgBcm+hcXPMVSGUN9d+pvJ6+VQ==
   dependencies:
-    minimatch "^3.0.4"
+    minimatch "^3.0.5"
     p-limit "^3.1.0 "
 
 duplexer3@^0.1.4:
@@ -1264,7 +1264,7 @@ minimatch@5.0.1:
   dependencies:
     brace-expansion "^2.0.1"
 
-minimatch@^3.0.4:
+minimatch@^3.0.4, minimatch@^3.0.5:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-3.1.2.tgz#19cd194bfd3e428f049a70817c038d89ab4be35b"
   integrity sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==
