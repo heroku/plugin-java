@@ -36,7 +36,7 @@
     "sha": "eed86ee3a3825b621b8cb6bfab420b711d88d37f"
   },
   "devDependencies": {
-    "chai": "^4.3.4",
+    "chai": "^5.0.0",
     "depcheck": "^1.4.2",
     "dir-compare": "^4.0.0",
     "fixture-stdout": "0.2.1",
