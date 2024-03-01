@@ -44,7 +44,7 @@
     "heroku-client": "^3.0.0-beta2",
     "mocha": "^10.1.0",
     "node-fetch": "^3.3.0",
-    "tmp": "0.2.1",
+    "tmp": "0.2.3",
     "unexpected": "13.2.1",
     "wrench": "^1.5.8"
   }
