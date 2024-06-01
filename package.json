@@ -38,7 +38,7 @@
   "devDependencies": {
     "chai": "^5.0.0",
     "depcheck": "^1.4.2",
-    "dir-compare": "^4.0.0",
+    "dir-compare": "^5.0.0",
     "fixture-stdout": "0.2.1",
     "fs-extra": "^11.1.1",
     "heroku-client": "^3.0.0-beta2",
