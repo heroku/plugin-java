@@ -68,7 +68,7 @@ yarn test
 
 heroku plugins:link .
 
-app="heroku-exec-test-$(openssl rand -hex 4)"
+app="plugin-java-test-$(openssl rand -hex 4)"
 echo "Preparing test app ${app}..."
 
 mkdir -p tmp
@@ -80,8 +80,7 @@ cd ${app}
 echo "Creating git repo..."
 git init
 
-echo "web: python3 -m http.server \$PORT" > Procfile
-echo "worker: echo 'class A{public static void main(String[] a) throws Exception{while(true){Thread.sleep(1000);}}}' > A.java; javac A.java; java A" >> Procfile
+echo "worker: echo 'class A{public static void main(String[] a) throws Exception{while(true){Thread.sleep(1000);}}}' > A.java; javac A.java; java A" > Procfile
 
 echo "Creating Heroku app..."
 heroku create ${app}
@@ -97,22 +96,6 @@ trap "{ echo ''; echo 'Cleaning up...'; heroku destroy ${app} --confirm ${app}; 
 echo "Deploying..."
 git push heroku master
 
-git commit -m "redeploy" --allow-empty
-git push heroku master
-
-echo -n "Waiting for dyno..."
-state="starting"
-while [ "up" != "$state" ]; do
-  if [ "starting" != "$state" ]; then
-    echo "WARNING: dyno state is \"${state}\""
-  fi
-  echo -n "."
-  sleep 2
-  state=$(heroku ps --json | jq .[0].state -r)
-done
-echo ""
-
-heroku ps:scale web=0
 heroku ps:scale worker=1
 
 dyno="worker.1"
