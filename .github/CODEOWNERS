@@ -1,4 +1,6 @@
 # Default to requesting reviews from the Languages team.
+#ECCN:Open Source
+#GUSINFO:Languages,Heroku JVM Platform
 * @heroku/languages
 
 # However, request review from specific owners instead for files that are
