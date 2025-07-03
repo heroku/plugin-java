@@ -7,3 +7,4 @@
 # updated by Dependabot, to reduce team review request noise.
 package.json @Malax
 yarn.lock @Malax
+/.github/workflows/ @Malax
