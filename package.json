@@ -29,7 +29,7 @@
   "license": "ISC",
   "dependencies": {
     "heroku-cli-util": "^8.0.8",
-    "@heroku-cli/heroku-exec-util": "0.9.2",
+    "@heroku-cli/heroku-exec-util": "0.9.3",
     "uuid": "^11.1.0"
   },
   "heroku-deploy": {
