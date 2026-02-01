@@ -146,10 +146,10 @@
     supports-color "^5.5.0"
     tslib "^1.9.3"
 
-"@heroku-cli/heroku-exec-util@0.9.3":
-  version "0.9.3"
-  resolved "https://registry.yarnpkg.com/@heroku-cli/heroku-exec-util/-/heroku-exec-util-0.9.3.tgz#69dec0a98eacb44c233e06589f1f4990ad26aa8c"
-  integrity sha512-+c/e5EYFzhy0Fri04EhNhqLGdpkndqquod27fcy3vaE1RAJiQC2IppxYhLNbczJzgBW1v2ICHHyFfwjzjBdcrg==
+"@heroku-cli/heroku-exec-util@0.9.4":
+  version "0.9.4"
+  resolved "https://registry.yarnpkg.com/@heroku-cli/heroku-exec-util/-/heroku-exec-util-0.9.4.tgz#ff4af2ac9cb2e2ba5b01cc47f2c7714cd511b1f7"
+  integrity sha512-Lx4UsT+Wm7YLRRqigOu4H0OU+fdCKzUFIHyMnXktCadqsJHew3GceKvoPhk5+Cl3itxJoVZQO7fIgb+i3xPAfA==
   dependencies:
     "@heroku/heroku-cli-util" "^8.0.13"
     "@heroku/socksv5" "^0.0.9"
