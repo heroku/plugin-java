@@ -1210,9 +1210,9 @@ heroku-cli-util@^8.0.8:
     tunnel-agent "^0.6.0"
 
 heroku-client@^3.0.0-beta2, heroku-client@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/heroku-client/-/heroku-client-3.1.0.tgz#7e3f6804d18a6ee9e3a774ff8bc9861b9b1a4725"
-  integrity sha512-UfGKwUm5duzzSVI8uUXlNAE1mus6uPxmZPji4vuG1ArV5DYL1rXsZShp0OoxraWdEwYoxCUrM6KGztC68x5EZQ==
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/heroku-client/-/heroku-client-3.1.1.tgz#b6a2f21edd427396a2ee460978a704792d1febe0"
+  integrity sha512-pddaffngJ57sYfAZhzbIrbPpUpfnTmwq+RS2Hng7BuQRTrmXjBd8LBxs/lQ8etfPRRrv4ol+kwCu84GL/bsFyQ==
   dependencies:
     is-retry-allowed "^1.0.0"
     tunnel-agent "^0.6.0"
