@@ -6,7 +6,7 @@ module.exports = function index(pkg) {
   };
 
   function showVersion(context) {
-    cli.warn('This command is deprecated. For information about deploying Java applications with Heroku, refer to https://devcenter.heroku.com/articles/deploying-jar-and-war-files.')
+    cli.warn('We deprecated this command. For more information about deploying Java apps with Heroku, see https://devcenter.heroku.com/articles/deploying-jar-and-war-files.')
     console.log(pkg.version);
   }
 }

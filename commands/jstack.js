@@ -22,7 +22,7 @@ module.exports = function(topic, command) {
 };
 
 function * run(context, heroku) {
-  cli.warn('This command is deprecated. For information about deploying Java applications with Heroku, refer to https://devcenter.heroku.com/articles/deploying-jar-and-war-files.')
+  cli.warn('We deprecated this command. For more information about deploying Java apps with Heroku, see https://devcenter.heroku.com/articles/deploying-jar-and-war-files.')
   yield exec.initFeature(context, heroku, undefined, function *(configVars) {
     yield exec.updateClientKey(context, heroku, configVars, function(privateKey, dyno, response) {
       var message = `Generating thread dump for ${cli.color.cyan.bold(dyno)} on ${cli.color.app(context.app)}`

@@ -27,7 +27,7 @@ module.exports = function(topic, command) {
 };
 
 function* war(context, heroku) {
-  cli.warn('This command is deprecated. For information about deploying Java applications with Heroku, refer to https://devcenter.heroku.com/articles/deploying-jar-and-war-files.')
+  cli.warn('We deprecated this command. For more information about deploying Java apps with Heroku, see https://devcenter.heroku.com/articles/deploying-jar-and-war-files.')
   return withWarFile(context, function(warFile) {
     if (!warFile.endsWith('.war'))
       return cli.exit(1, 'War file must have a .war extension');
