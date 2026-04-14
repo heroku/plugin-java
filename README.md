@@ -2,6 +2,8 @@
 [![](https://badgen.net/github/license/heroku/plugin-java)](LICENSE)
 [![CI](https://github.com/heroku/plugin-java/actions/workflows/ci.yml/badge.svg)](https://github.com/heroku/plugin-java/actions/workflows/ci.yml)
 
+**Note:** We archived this repo. For more information about deploying Java apps with Heroku, see [Deploying JAR and WAR Files](https://devcenter.heroku.com/articles/deploying-jar-and-war-files).
+
 This project is a [Heroku CLI](https://cli.heroku.com/)
 plugin for working with Java applications on Heroku. It provides commands for:
 

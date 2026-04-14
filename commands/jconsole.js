@@ -20,6 +20,7 @@ module.exports = function(topic, command) {
 };
 
 function * run(context, heroku) {
+  cli.warn('We deprecated this command. For more information about deploying Java apps with Heroku, see https://devcenter.heroku.com/articles/deploying-jar-and-war-files.')
   yield exec.initFeature(context, heroku, undefined, function *(configVars) {
     yield exec.createSocksProxy(context, heroku, configVars, function(dyno_ip) {
       cli.log("Launching JConsole...")

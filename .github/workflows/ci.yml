@@ -32,6 +32,8 @@ jobs:
           node-version: 18
       - name: Install Heroku CLI
         run: curl https://cli-assets.heroku.com/install.sh | sh
+      - name: Use older Heroku CLI version
+        run: heroku update --version=10.17.0
       - name: Configure Git
         run: |
           git config --global user.email "heroku-languages-team+circle-ci-jvm-tools-tests@salesforce.com"

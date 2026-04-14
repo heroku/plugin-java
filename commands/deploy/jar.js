@@ -27,6 +27,7 @@ module.exports = function(topic, command) {
 };
 
 function* jar(context, heroku) {
+  cli.warn('We deprecated this command. For more information about deploying Java apps with Heroku, see https://devcenter.heroku.com/articles/deploying-jar-and-war-files.')
   return withJarFile(context, function(file) {
     if (!(file.endsWith('.war') || file.endsWith('.jar')))
       return cli.exit(1, 'JAR file must have a .jar or .war extension');
